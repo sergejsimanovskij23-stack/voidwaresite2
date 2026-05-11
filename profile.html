@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VoidWare Profile</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#05060d] text-white">
+
+<header class="sticky top-0 z-50 backdrop-blur-xl border-b border-white/5 bg-[#05060d]/90">
+<div class="max-w-7xl mx-auto px-4 py-5 flex items-center justify-between">
+
+<div class="flex items-center gap-3">
+<img src="logo.jpg" class="w-12 h-12 rounded-2xl border border-cyan-300/30 object-cover">
+<div>
+<h1 class="font-bold text-xl">VoidWare</h1>
+<p class="text-xs text-white/40">Profile</p>
+</div>
+</div>
+
+<nav class="flex gap-3">
+<a href="index.html" class="px-6 py-3 rounded-2xl bg-white/5 border border-white/10">Главная</a>
+<a href="shop.html" class="px-6 py-3 rounded-2xl bg-white/5 border border-white/10">Товары</a>
+<a href="profile.html" class="px-6 py-3 rounded-2xl bg-cyan-300 text-black font-semibold">Профиль</a>
+</nav>
+
+</div>
+</header>
+
+<div class="min-h-screen flex items-center justify-center px-4">
+
+<div class="w-full max-w-md rounded-[2rem] border border-cyan-300/10 bg-[#090c15]/95 p-8">
+
+<h1 class="text-4xl font-black text-center mb-8">Вход / Регистрация</h1>
+
+<form class="space-y-4" method="POST" action="auth.php">
+<input type="hidden" name="action" value="login">
+
+<input type="text" name="username" placeholder="Логин"
+class="w-full px-5 py-4 rounded-2xl bg-white/5 border border-white/10">
+
+<input type="password" name="password" placeholder="Пароль"
+class="w-full px-5 py-4 rounded-2xl bg-white/5 border border-white/10">
+
+<button class="w-full py-4 rounded-2xl bg-cyan-300 text-black font-bold">
+Войти
+</button>
+</form>
+
+</div>
+</div>
+
+</body>
+</html>
