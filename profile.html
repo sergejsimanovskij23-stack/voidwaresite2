@@ -6,50 +6,108 @@
 <title>VoidWare Profile</title>
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-[#05060d] text-white">
+
+<body class="bg-[#05060d] text-white overflow-x-hidden">
 
 <header class="sticky top-0 z-50 backdrop-blur-xl border-b border-white/5 bg-[#05060d]/90">
-<div class="max-w-7xl mx-auto px-4 py-5 flex items-center justify-between">
+<div class="max-w-7xl mx-auto px-4 py-5 flex items-center justify-between flex-wrap gap-4">
 
 <div class="flex items-center gap-3">
-<img src="logo.jpg" class="w-12 h-12 rounded-2xl border border-cyan-300/30 object-cover">
+
+<!-- ЛОГО -->
+<div class="w-12 h-12 rounded-2xl overflow-hidden border border-cyan-300/30 bg-[#0c1320]">
+<img src="logo.jpg" class="w-full h-full object-cover">
+</div>
+
 <div>
 <h1 class="font-bold text-xl">VoidWare</h1>
-<p class="text-xs text-white/40">Profile</p>
-</div>
+<p class="text-xs text-white/40">Profile System</p>
 </div>
 
-<nav class="flex gap-3">
-<a href="index.html" class="px-6 py-3 rounded-2xl bg-white/5 border border-white/10">Главная</a>
-<a href="shop.html" class="px-6 py-3 rounded-2xl bg-white/5 border border-white/10">Товары</a>
-<a href="profile.html" class="px-6 py-3 rounded-2xl bg-cyan-300 text-black font-semibold">Профиль</a>
+</div>
+
+<nav class="flex flex-wrap gap-3">
+
+<a href="index.html"
+class="px-6 py-3 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition">
+Главная
+</a>
+
+<a href="shop.html"
+class="px-6 py-3 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition">
+Товары
+</a>
+
+<a href="profile.php"
+class="px-6 py-3 rounded-2xl bg-cyan-300 text-black font-semibold">
+Профиль
+</a>
+
 </nav>
-
 </div>
 </header>
 
-<div class="min-h-screen flex items-center justify-center px-4">
+<section class="max-w-4xl mx-auto px-4 pt-20 pb-20">
 
-<div class="w-full max-w-md rounded-[2rem] border border-cyan-300/10 bg-[#090c15]/95 p-8">
+<div class="rounded-[3rem] border border-cyan-300/10 bg-[#090c15]/90 p-10">
 
-<h1 class="text-4xl font-black text-center mb-8">Вход / Регистрация</h1>
+<h1 class="text-5xl font-black mb-10 text-center">
+Вход / Регистрация
+</h1>
 
-<form class="space-y-4" method="POST" action="auth.php">
-<input type="hidden" name="action" value="login">
+<div class="grid md:grid-cols-2 gap-8">
 
-<input type="text" name="username" placeholder="Логин"
-class="w-full px-5 py-4 rounded-2xl bg-white/5 border border-white/10">
+<form class="rounded-3xl bg-white/5 border border-white/10 p-8">
+<h2 class="text-3xl font-bold mb-6">Вход</h2>
 
-<input type="password" name="password" placeholder="Пароль"
-class="w-full px-5 py-4 rounded-2xl bg-white/5 border border-white/10">
+<input type="text" placeholder="Логин"
+class="w-full mb-4 px-5 py-4 rounded-2xl bg-black/30 border border-white/10 outline-none">
 
-<button class="w-full py-4 rounded-2xl bg-cyan-300 text-black font-bold">
+<input type="password" placeholder="Пароль"
+class="w-full mb-6 px-5 py-4 rounded-2xl bg-black/30 border border-white/10 outline-none">
+
+<button class="w-full px-6 py-4 rounded-2xl bg-cyan-300 text-black font-semibold hover:scale-105 transition">
 Войти
+</button>
+</form>
+
+<form class="rounded-3xl bg-white/5 border border-white/10 p-8">
+<h2 class="text-3xl font-bold mb-6">Регистрация</h2>
+
+<input type="text" placeholder="Логин"
+class="w-full mb-4 px-5 py-4 rounded-2xl bg-black/30 border border-white/10 outline-none">
+
+<input type="password" placeholder="Пароль"
+class="w-full mb-4 px-5 py-4 rounded-2xl bg-black/30 border border-white/10 outline-none">
+
+<input type="text" placeholder="Лицензионный ключ"
+class="w-full mb-6 px-5 py-4 rounded-2xl bg-black/30 border border-white/10 outline-none">
+
+<button class="w-full px-6 py-4 rounded-2xl bg-cyan-300 text-black font-semibold hover:scale-105 transition">
+Создать аккаунт
 </button>
 </form>
 
 </div>
 </div>
+</section>
+
+<footer class="border-t border-white/5">
+<div class="max-w-7xl mx-auto px-4 py-16 flex flex-col md:flex-row items-center justify-between gap-8">
+
+<div>
+<h3 class="text-3xl font-black mb-3">VoidWare</h3>
+<p class="text-white/50">© voidware 2026 — Все права защищены.</p>
+</div>
+
+<a href="https://t.me/VoidWareDlc"
+target="_blank"
+class="px-8 py-4 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition">
+Telegram
+</a>
+
+</div>
+</footer>
 
 </body>
 </html>
