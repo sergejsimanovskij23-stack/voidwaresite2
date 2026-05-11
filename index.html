@@ -37,6 +37,38 @@ minecraft client download
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
+html,
+body {
+overflow-x: hidden;
+max-width: 100%;
+}
+
+* {
+box-sizing: border-box;
+}
+
+img {
+max-width: 100%;
+height: auto;
+}
+
+iframe {
+max-width: 100%;
+}
+
+section {
+overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+p,
+span {
+word-wrap: break-word;
+overflow-wrap: break-word;
+}
+
 #logo-card {
 transition: transform .15s ease;
 transform-style: preserve-3d;
@@ -137,7 +169,7 @@ class="px-6 py-3 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10
 
 <section class="max-w-7xl mx-auto px-4 pt-20 pb-20">
 
-<div class="grid lg:grid-cols-2 gap-14 items-center">
+<div class="grid lg:grid-cols-2 gap-14 items-center overflow-hidden">
 
 <div>
 
@@ -146,7 +178,7 @@ class="px-6 py-3 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10
 <span class="text-cyan-100 text-sm">Лучший PvP клиент</span>
 </div>
 
-<h1 class="text-5xl md:text-7xl font-black leading-[0.95]">
+<h1 class="text-4xl sm:text-5xl md:text-7xl font-black leading-[0.95] break-words">
 VoidWare —<br>
 мощность,<br>
 стиль и<br>
@@ -162,10 +194,10 @@ VoidWare —<br>
 
 <div class="flex justify-center relative">
 
-<div class="absolute w-[420px] h-[420px] rounded-full bg-cyan-300/10 blur-3xl"></div>
+<div class="absolute w-[260px] h-[260px] sm:w-[420px] sm:h-[420px] rounded-full bg-cyan-300/10 blur-3xl"></div>
 
 <div id="logo-card"
-class="relative w-[320px] h-[320px] rounded-[3rem] overflow-hidden border border-cyan-300/20 bg-[#0d111d]/90">
+class="relative w-[260px] h-[260px] sm:w-[320px] sm:h-[320px] rounded-[3rem] overflow-hidden border border-cyan-300/20 bg-[#0d111d]/90">
 
 <img src="/newicon.jpg"
 class="w-full h-full object-cover">
@@ -185,7 +217,7 @@ class="w-full h-full object-cover">
 Статистика
 </p>
 
-<h2 class="text-5xl font-black">
+<h2 class="text-4xl md:text-5xl font-black break-words">
 VoidWare в цифрах
 </h2>
 </div>
@@ -212,7 +244,7 @@ VoidWare в цифрах
 
 <section class="max-w-7xl mx-auto px-4 pb-28">
 
-<div class="rounded-[3rem] border border-cyan-300/10 bg-[#090c15]/90 p-10 md:p-16">
+<div class="rounded-[3rem] border border-cyan-300/10 bg-[#090c15]/90 p-6 sm:p-10 md:p-16">
 
 <div class="grid lg:grid-cols-2 gap-10 items-center">
 
@@ -222,7 +254,7 @@ VoidWare в цифрах
 О клиенте
 </p>
 
-<h2 class="text-5xl font-black mb-6">
+<h2 class="text-4xl md:text-5xl font-black mb-6 break-words">
 Создан для доминирования.
 </h2>
 
@@ -235,7 +267,7 @@ VoidWare в цифрах
 
 </div>
 
-<div class="grid grid-cols-2 gap-5">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
 
 <div class="rounded-3xl bg-white/5 border border-white/10 p-6 glow-hover">
 <div class="text-4xl mb-4">🛡️</div>
@@ -275,7 +307,7 @@ VoidWare в цифрах
 Видео
 </p>
 
-<h2 class="text-5xl font-black mb-6">
+<h2 class="text-4xl md:text-5xl font-black mb-6 break-words">
 Обзор клиента VoidWare
 </h2>
 
@@ -286,9 +318,9 @@ VoidWare в цифрах
 
 </div>
 
-<div class="rounded-[3rem] overflow-hidden border border-cyan-300/10 bg-[#090c15]/90 p-4">
+<div class="rounded-[2rem] sm:rounded-[3rem] overflow-hidden border border-cyan-300/10 bg-[#090c15]/90 p-2 sm:p-4">
 
-<div class="aspect-video rounded-[2rem] overflow-hidden">
+<div class="aspect-video rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden">
 
 <iframe
 class="w-full h-full"
