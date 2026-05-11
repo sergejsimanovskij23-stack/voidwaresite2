@@ -1,119 +1,65 @@
+```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VoidWare</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-body {
-background: #05060d;
-overflow-x: hidden;
+#logo-card{
+transition:transform .15s ease;
+transform-style:preserve-3d;
+will-change:transform;
 }
 
-#logo-card {
-transition: transform .15s ease;
-transform-style: preserve-3d;
-will-change: transform;
+.glow-hover{
+transition:.3s;
 }
 
-.glow-hover {
-transition: .3s;
+.glow-hover:hover{
+transform:scale(1.05);
+border-color:rgba(103,232,249,.4);
+background:rgba(103,232,249,.08);
+box-shadow:0 0 30px rgba(103,232,249,.12);
 }
 
-.glow-hover:hover {
-transform: scale(1.05);
-border-color: rgba(103,232,249,.4);
-background: rgba(103,232,249,.08);
-box-shadow: 0 0 30px rgba(103,232,249,.12);
-}
-
-.glow-hover:active {
-transform: scale(1.05);
-}
-
-.hero-image {
-background:
-linear-gradient(145deg,#0f172a,#111827);
-position: relative;
-overflow: hidden;
-}
-
-.hero-image::before {
-content: "";
-position: absolute;
-inset: -40%;
-background:
-radial-gradient(circle,rgba(103,232,249,.25),transparent 40%);
-animation: pulse 6s linear infinite;
-}
-
-.hero-image::after {
-content: "VW";
-position: absolute;
-inset: 0;
-display: flex;
-align-items: center;
-justify-content: center;
-font-size: 120px;
-font-weight: 900;
-color: rgba(103,232,249,.12);
-letter-spacing: 10px;
-}
-
-@keyframes pulse {
-0% {
-transform: rotate(0deg);
-}
-100% {
-transform: rotate(360deg);
-}
-}
-
-.feature-image {
-height: 180px;
-border-radius: 2rem;
-background:
-linear-gradient(135deg,#0f172a,#111827);
-display: flex;
-align-items: center;
-justify-content: center;
-font-size: 64px;
-position: relative;
-overflow: hidden;
-}
-
-.feature-image::before {
-content: "";
-position: absolute;
-width: 220px;
-height: 220px;
-background: rgba(103,232,249,.15);
-border-radius: 50%;
-filter: blur(50px);
+.glow-hover:active{
+transform:scale(1.05);
 }
 </style>
 </head>
 
-<body class="text-white">
+<body class="bg-[#05060d] text-white overflow-x-hidden">
 
 <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(125,223,255,0.12),transparent_40%)]"></div>
 
 <header class="sticky top-0 z-50 backdrop-blur-xl border-b border-white/5 bg-[#05060d]/90">
+
 <div class="max-w-7xl mx-auto px-4 py-5 flex items-center justify-between flex-wrap gap-4">
 
 <div class="flex items-center gap-3">
-<div class="w-12 h-12 rounded-2xl overflow-hidden border border-cyan-300/30 hero-image"></div>
+
+<div class="w-12 h-12 rounded-2xl overflow-hidden border border-cyan-300/30">
+
+<img
+src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxAQEBUQEBAVFRUVFRUVFRUVFRUVFRUVFRUWFhUVFRUYHSggGBolHRUVITEhJSkrLi4uFx8zODMsNygtLisBCgoKDg0OGxAQGy0lICYtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIAQ4A8QMBIgACEQEDEQH/xAAbAAADAQEBAQEAAAAAAAAAAAAABQYDBEcBAv/EADsQAAIBAgQDBgQEBgMBAAAAAAECAwQRAAUSITFBBhMiUWFxgZEUMqGxwdHwQlLh8SNSYnKi4f/EABoBAQEBAQEBAQAAAAAAAAAAAAABAgMEBQb/xAAuEQEBAAICAQMCBgMAAAAAAAAAAQIRAwQSITFBE1EiMmFxgaGx8BRCweH/2gAMAwEAAhEDEQA/APmKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+class="w-full h-full object-cover"
+/>
+
+</div>
 
 <div>
 <h1 class="font-bold text-xl">VoidWare</h1>
 <p class="text-xs text-white/40">Minecraft 1.21.11</p>
 </div>
+
 </div>
 
 <nav class="flex flex-wrap gap-3">
+
 <a href="index.html"
 class="px-6 py-3 rounded-2xl bg-cyan-300 text-black font-semibold">
 Главная
@@ -128,33 +74,40 @@ class="px-6 py-3 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10
 class="px-6 py-3 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition">
 Профиль
 </a>
+
 </nav>
 
 </div>
+
 </header>
 
 <section class="max-w-7xl mx-auto px-4 pt-20 pb-20">
+
 <div class="grid lg:grid-cols-2 gap-14 items-center">
 
 <div>
 
 <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-cyan-300/10 border border-cyan-300/20 mb-8">
+
 <div class="w-2 h-2 rounded-full bg-cyan-300 animate-pulse"></div>
-<span class="text-cyan-100 text-sm">Лучший PvP клиент</span>
+
+<span class="text-cyan-100 text-sm">
+Лучший PvP клиент
+</span>
+
 </div>
 
 <h1 class="text-5xl md:text-7xl font-black leading-[0.95]">
-VoidWare —<br />
-мощность,<br />
-стиль и<br />
+VoidWare —<br>
+мощность,<br>
+стиль и<br>
 стабильность.
 </h1>
 
 <p class="mt-8 text-lg text-white/60 leading-relaxed max-w-xl">
 Современный клиент для Minecraft 1.21.11
 с продвинутыми функциями,
-плавной оптимизацией
-и красивым визуальным стилем.
+плавной оптимизацией и красивым визуальным стилем.
 </p>
 
 </div>
@@ -164,17 +117,25 @@ VoidWare —<br />
 <div class="absolute w-[420px] h-[420px] rounded-full bg-cyan-300/10 blur-3xl"></div>
 
 <div id="logo-card"
-class="relative w-[320px] h-[320px] rounded-[3rem] overflow-hidden border border-cyan-300/20 bg-[#0d111d]/90 hero-image">
-</div>
+class="relative w-[320px] h-[320px] rounded-[3rem] overflow-hidden border border-cyan-300/20 bg-[#0d111d]/90">
+
+<img
+src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxAQEBUQEBAVFRUVFRUVFRUVFRUVFRUVFRUWFhUVFRUYHSggGBolHRUVITEhJSkrLi4uFx8zODMsNygtLisBCgoKDg0OGxAQGy0lICYtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIAQ4A8QMBIgACEQEDEQH/xAAbAAADAQEBAQEAAAAAAAAAAAAABQYDBEcBAv/EADsQAAIBAgQDBgQEBgMBAAAAAAECAwQRAAUSITFBBhMiUWFxgZEUMqGxwdHwQlLh8SNSYnKi4f/EABoBAQEBAQEBAQAAAAAAAAAAAAABAgMEBQb/xAAuEQEBAAICAQMCBgMAAAAAAAAAAQIRAwQSITFBE1EiMmFxgaGx8BRCweH/2gAMAwEAAhEDEQA/APmKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+class="w-full h-full object-cover"
+/>
 
 </div>
 
 </div>
+
+</div>
+
 </section>
 
 <section class="max-w-7xl mx-auto px-4 pb-28">
 
 <div class="mb-12">
+
 <p class="uppercase tracking-[0.3em] text-cyan-300 text-sm mb-4">
 Статистика
 </p>
@@ -182,6 +143,7 @@ class="relative w-[320px] h-[320px] rounded-[3rem] overflow-hidden border border
 <h2 class="text-5xl font-black">
 VoidWare в цифрах
 </h2>
+
 </div>
 
 <div class="grid md:grid-cols-3 gap-6">
@@ -202,6 +164,7 @@ VoidWare в цифрах
 </div>
 
 </div>
+
 </section>
 
 <section class="max-w-7xl mx-auto px-4 pb-28">
@@ -221,11 +184,10 @@ VoidWare в цифрах
 </h2>
 
 <p class="text-white/60 leading-relaxed text-lg">
-Разработчики VoidWare уделили огромное внимание
-стабильности, обходам и визуальной части клиента.
+Разработчики VoidWare уделили огромное внимание стабильности,
+обходам и визуальной части клиента.
 Каждый элемент был тщательно оптимизирован
-для комфортной игры
-и максимальной производительности.
+для комфортной игры и максимальной производительности.
 </p>
 
 </div>
@@ -233,25 +195,25 @@ VoidWare в цифрах
 <div class="grid grid-cols-2 gap-5">
 
 <div class="rounded-3xl bg-white/5 border border-white/10 p-6 glow-hover">
-<div class="feature-image mb-5">🛡️</div>
+<div class="text-4xl mb-4">🛡️</div>
 <h3 class="text-2xl font-bold mb-2">Обходы</h3>
 <p class="text-white/50">Продвинутые bypass функции.</p>
 </div>
 
 <div class="rounded-3xl bg-white/5 border border-white/10 p-6 glow-hover">
-<div class="feature-image mb-5">⚡</div>
+<div class="text-4xl mb-4">⚡</div>
 <h3 class="text-2xl font-bold mb-2">Стабильность</h3>
 <p class="text-white/50">Максимально плавная работа.</p>
 </div>
 
 <div class="rounded-3xl bg-white/5 border border-white/10 p-6 glow-hover">
-<div class="feature-image mb-5">🚀</div>
+<div class="text-4xl mb-4">🚀</div>
 <h3 class="text-2xl font-bold mb-2">Оптимизация</h3>
 <p class="text-white/50">Высокий FPS даже на слабых ПК.</p>
 </div>
 
 <div class="rounded-3xl bg-white/5 border border-white/10 p-6 glow-hover">
-<div class="feature-image mb-5">✨</div>
+<div class="text-4xl mb-4">✨</div>
 <h3 class="text-2xl font-bold mb-2">Визуал</h3>
 <p class="text-white/50">Красивый и современный интерфейс.</p>
 </div>
@@ -287,6 +249,7 @@ VoidWare в цифрах
 <div class="rounded-[3rem] overflow-hidden border border-cyan-300/10 bg-[#090c15]/90 p-4">
 
 <div class="aspect-video rounded-[2rem] overflow-hidden">
+
 <iframe
 class="w-full h-full"
 src="https://www.youtube.com/embed/TjPhzgxe3L0"
@@ -294,6 +257,7 @@ title="VoidWare Video"
 frameborder="0"
 allowfullscreen>
 </iframe>
+
 </div>
 
 </div>
@@ -308,6 +272,7 @@ allowfullscreen>
 
 <div>
 <h3 class="text-3xl font-black mb-3">VoidWare</h3>
+
 <p class="text-white/50">
 © voidware 2026 — Все права защищены.
 </p>
@@ -315,7 +280,8 @@ allowfullscreen>
 
 <div class="flex flex-wrap gap-4">
 
-<a href="https://t.me/VoidWareDlc"
+<a
+href="https://t.me/VoidWareDlc"
 target="_blank"
 class="px-6 py-3 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition">
 Telegram
@@ -348,3 +314,4 @@ card.style.transform =
 
 </body>
 </html>
+```
