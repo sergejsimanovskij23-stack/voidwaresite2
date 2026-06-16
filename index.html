@@ -509,6 +509,68 @@
                 font-size: 2rem;
             }
         }
+
+        /* ── Fullscreen Easter Egg ── */
+        .easter-egg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: rgba(0, 0, 0, 0.92);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .easter-egg-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        .easter-egg-overlay img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 2rem;
+            box-shadow: 0 0 80px rgba(124, 58, 237, 0.3);
+            border: 2px solid rgba(124, 58, 237, 0.2);
+            animation: eggPulse 2s ease-in-out infinite;
+            object-fit: contain;
+        }
+        @keyframes eggPulse {
+            0%,
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 60px rgba(124, 58, 237, 0.2);
+            }
+            50% {
+                transform: scale(1.02);
+                box-shadow: 0 0 100px rgba(124, 58, 237, 0.4);
+            }
+        }
+        .easter-egg-counter {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10000;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.8rem;
+            font-family: 'Inter', sans-serif;
+            pointer-events: none;
+            display: none;
+        }
+        .easter-egg-counter.show {
+            display: block;
+        }
+
+        /* ── Header blur ── */
+        .header-transition {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
     </style>
 </head>
 
@@ -534,7 +596,7 @@
         <header id="mainHeader" class="fixed top-0 left-0 right-0 z-50 header-transition bg-[#07070d]/80 backdrop-blur-md border-b border-white/5">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between flex-wrap gap-3">
                 <div class="flex items-center gap-3">
-                    <div class="w-11 h-11 rounded-2xl overflow-hidden border border-purple-400/30 shadow-lg shadow-purple-500/10 flex-shrink-0">
+                    <div id="logoClicker" class="w-11 h-11 rounded-2xl overflow-hidden border border-purple-400/30 shadow-lg shadow-purple-500/10 flex-shrink-0 cursor-pointer transition hover:scale-105 hover:border-purple-400/60" title="Кликни 10 раз на логотип...">
                         <img src="/newicon.jpg" alt="VoidWare logo" class="w-full h-full object-cover" />
                     </div>
                     <div>
@@ -783,6 +845,12 @@
 </div>
 <!-- ─── END CONTENT ─── -->
 
+<!-- ─── EASTER EGG OVERLAY ─── -->
+<div class="easter-egg-overlay" id="easterEggOverlay">
+    <img src="/ownervoidware.png" alt="VoidWare Easter Egg" id="easterEggImage" />
+</div>
+<div class="easter-egg-counter" id="easterEggCounter">Кликни ещё <span id="clickCount">10</span> раз на логотип...</div>
+
 <!-- ─── SCRIPTS ─── -->
 <script>
     // ── Header blur on scroll ──
@@ -869,7 +937,6 @@
                 p.update();
                 p.draw();
             });
-            // draw lines
             for (let i = 0; i < particles.length; i++) {
                 for (let j = i + 1; j < particles.length; j++) {
                     const dx = particles[i].x - particles[j].x;
@@ -927,7 +994,7 @@
         setTimeout(type, 600);
     })();
 
-    // ── Animated counters (FIXED: no NaN) ──
+    // ── Animated counters ──
     (function initCounters() {
         const statNumbers = document.querySelectorAll('.stat-number-value');
         let countersAnimated = false;
@@ -986,6 +1053,74 @@
         }, { threshold: 0.15 });
 
         reveals.forEach(el => observer.observe(el));
+    })();
+
+    // ── EASTER EGG: 10 кликов по логотипу ──
+    (function initEasterEgg() {
+        const logo = document.getElementById('logoClicker');
+        const overlay = document.getElementById('easterEggOverlay');
+        const counterEl = document.getElementById('easterEggCounter');
+        const clickCountEl = document.getElementById('clickCount');
+        let clickCount = 0;
+        const requiredClicks = 10;
+        let isActive = false;
+
+        logo.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (isActive) return;
+
+            clickCount++;
+            const remaining = requiredClicks - clickCount;
+
+            if (clickCount < requiredClicks) {
+                // Показываем счётчик
+                counterEl.classList.add('show');
+                clickCountEl.textContent = remaining;
+                // Лёгкая анимация логотипа
+                logo.style.transform = 'scale(0.92)';
+                setTimeout(() => {
+                    logo.style.transform = '';
+                }, 150);
+            }
+
+            if (clickCount >= requiredClicks) {
+                isActive = true;
+                counterEl.classList.remove('show');
+                // Показываем фото на весь экран
+                overlay.classList.add('active');
+                // Через 5 секунд скрываем
+                setTimeout(() => {
+                    overlay.classList.remove('active');
+                    // Сбрасываем счётчик через небольшую задержку
+                    setTimeout(() => {
+                        clickCount = 0;
+                        isActive = false;
+                    }, 300);
+                }, 5000);
+            }
+        });
+
+        // Клик по оверлею — закрыть раньше времени
+        overlay.addEventListener('click', function() {
+            overlay.classList.remove('active');
+            setTimeout(() => {
+                clickCount = 0;
+                isActive = false;
+                counterEl.classList.remove('show');
+            }, 300);
+        });
+
+        // Нажатие ESC для закрытия
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && overlay.classList.contains('active')) {
+                overlay.classList.remove('active');
+                setTimeout(() => {
+                    clickCount = 0;
+                    isActive = false;
+                    counterEl.classList.remove('show');
+                }, 300);
+            }
+        });
     })();
 </script>
 
