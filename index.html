@@ -571,6 +571,65 @@
         .header-transition {
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
+        /* ── About Client Section ── */
+        .about-section {
+            border-radius: 2.5rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 2.5rem 2.5rem;
+            transition: all 0.4s ease;
+        }
+        .about-section:hover {
+            border-color: rgba(124, 58, 237, 0.15);
+            box-shadow: 0 8px 40px rgba(124, 58, 237, 0.05);
+        }
+        .about-section h2 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+        }
+        .about-section p {
+            color: rgba(255, 255, 255, 0.65);
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+        .about-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 1.2rem 0 0 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.6rem 1.5rem;
+        }
+        .about-section ul li {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.95rem;
+            padding: 0.3rem 0 0.3rem 1.8rem;
+            position: relative;
+            line-height: 1.5;
+        }
+        .about-section ul li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: #a78bfa;
+            font-size: 0.8rem;
+        }
+        @media (max-width: 640px) {
+            .about-section {
+                padding: 1.5rem;
+            }
+            .about-section h2 {
+                font-size: 1.6rem;
+            }
+            .about-section ul {
+                grid-template-columns: 1fr;
+            }
+            .about-section p {
+                font-size: 0.9rem;
+            }
+        }
     </style>
 </head>
 
@@ -790,6 +849,33 @@
                         Ваш браузер не поддерживает видео.
                     </video>
                 </div>
+            </div>
+        </section>
+
+        <!-- ─── ABOUT CLIENT (NEW SECTION) ─── -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 pb-16 sm:pb-24 reveal">
+            <div class="about-section">
+                <h2>О клиенте <span class="gradient-text">VoidWare</span></h2>
+                <p>
+                    VoidWare — это не просто чит-клиент, это комплексное решение для комфортной игры на серверах Minecraft.
+                    Мы объединили передовые технологии обхода античитов, интуитивно понятный интерфейс и максимальную
+                    производительность, чтобы каждый игрок мог чувствовать себя уверенно.
+                </p>
+                <p class="mt-3">
+                    Клиент разрабатывается с учётом всех современных требований: поддержка последних версий Minecraft,
+                    регулярные обновления, адаптация под разные сервера и активная обратная связь с сообществом.
+                    VoidWare — это выбор тех, кто ценит своё время и хочет получать максимум удовольствия от игры.
+                </p>
+                <ul>
+                    <li>Полная совместимость с Minecraft 1.21.11 и 1.16.5</li>
+                    <li>Интеллектуальная система обхода античитов</li>
+                    <li>Оптимизация для слабых и мощных ПК</li>
+                    <li>Красивый и настраиваемый интерфейс</li>
+                    <li>Быстрая и отзывчивая поддержка</li>
+                    <li>Регулярные обновления и новые функции</li>
+                    <li>Безопасная HWID-активация</li>
+                    <li>Доступ к эксклюзивным модулям</li>
+                </ul>
             </div>
         </section>
 
@@ -1073,10 +1159,8 @@
             const remaining = requiredClicks - clickCount;
 
             if (clickCount < requiredClicks) {
-                // Показываем счётчик
                 counterEl.classList.add('show');
                 clickCountEl.textContent = remaining;
-                // Лёгкая анимация логотипа
                 logo.style.transform = 'scale(0.92)';
                 setTimeout(() => {
                     logo.style.transform = '';
@@ -1086,12 +1170,9 @@
             if (clickCount >= requiredClicks) {
                 isActive = true;
                 counterEl.classList.remove('show');
-                // Показываем фото на весь экран
                 overlay.classList.add('active');
-                // Через 5 секунд скрываем
                 setTimeout(() => {
                     overlay.classList.remove('active');
-                    // Сбрасываем счётчик через небольшую задержку
                     setTimeout(() => {
                         clickCount = 0;
                         isActive = false;
@@ -1100,7 +1181,6 @@
             }
         });
 
-        // Клик по оверлею — закрыть раньше времени
         overlay.addEventListener('click', function() {
             overlay.classList.remove('active');
             setTimeout(() => {
@@ -1110,7 +1190,6 @@
             }, 300);
         });
 
-        // Нажатие ESC для закрытия
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape' && overlay.classList.contains('active')) {
                 overlay.classList.remove('active');
