@@ -425,14 +425,6 @@
             opacity: 0.4;
         }
 
-        /* Блокировка выделения текста */
-        .no-select {
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-        }
-
         @media (max-width: 480px) {
             .glass-card {
                 padding: 2rem 1.5rem;
@@ -520,56 +512,46 @@
         // ЗАЩИТА ОТ ПРОСМОТРА ИСХОДНОГО КОДА
         // ============================================
 
-        // 1. Блокировка правой кнопки мыши (контекстного меню) - без уведомления
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
             return false;
         });
 
-        // 2. Блокировка клавиш для просмотра кода - без уведомлений
         document.addEventListener('keydown', function(e) {
-            // F12
             if (e.key === 'F12') {
                 e.preventDefault();
                 return false;
             }
-            // Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
             if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) {
                 e.preventDefault();
                 return false;
             }
-            // Ctrl+U (просмотр исходного кода)
             if (e.ctrlKey && e.key === 'u') {
                 e.preventDefault();
                 return false;
             }
-            // Ctrl+S (сохранение страницы)
             if (e.ctrlKey && e.key === 's') {
                 e.preventDefault();
                 return false;
             }
         });
 
-        // 3. Блокировка выделения текста (кроме полей ввода)
         document.addEventListener('selectstart', function(e) {
             if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
                 e.preventDefault();
             }
         });
 
-        // 4. Блокировка перетаскивания
         document.addEventListener('dragstart', function(e) {
             e.preventDefault();
         });
 
-        // 5. Блокировка копирования (кроме полей ввода) - без уведомления
         document.addEventListener('copy', function(e) {
             if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
                 e.preventDefault();
             }
         });
 
-        // 6. Очистка консоли и предотвращение вывода
         console.log = function() {};
         console.warn = function() {};
         console.error = function() {};
@@ -577,7 +559,6 @@
         console.debug = function() {};
         console.clear();
 
-        // 7. Блокировка контекстного меню на изображениях
         document.querySelectorAll('img').forEach(img => {
             img.addEventListener('contextmenu', function(e) {
                 e.preventDefault();
@@ -585,20 +566,18 @@
             });
         });
 
-        // 8. Защита от iframe
         if (window.top !== window.self) {
             window.top.location = window.self.location;
         }
 
         // ============================================
-        // ШИФР ЦЕЗАРЯ (СДВИГ НА 5)
+        // ШИФР ЦЕЗАРЯ (СДВИГ НА 5) - РАСШИФРОВКА
         // ============================================
 
         function caesarDecrypt(text, shift = 5) {
             if (!text) return text;
             
             return text.split('').map(char => {
-                // Проверяем английские буквы
                 const code = char.charCodeAt(0);
                 
                 // Заглавные буквы A-Z
@@ -696,7 +675,7 @@
                             line = line.trim();
                             if (line === '') continue;
                             
-                            // Разделяем логин и пароль (формат: логин пароль)
+                            // Разделяем на логин и пароль (формат: логин пароль)
                             const parts = line.split(/\s+/);
                             if (parts.length >= 2) {
                                 const encryptedLogin = parts[0];
@@ -706,11 +685,7 @@
                                 const decryptedLogin = caesarDecrypt(encryptedLogin, 5);
                                 const decryptedPassword = caesarDecrypt(encryptedPassword, 5);
                                 
-                                console.log('Зашифрованный логин:', encryptedLogin);
-                                console.log('Расшифрованный логин:', decryptedLogin);
-                                console.log('Зашифрованный пароль:', encryptedPassword);
-                                console.log('Расшифрованный пароль:', decryptedPassword);
-                                
+                                // Сравниваем с введенными данными
                                 if (decryptedLogin === login && decryptedPassword === password) {
                                     found = true;
                                     break;
