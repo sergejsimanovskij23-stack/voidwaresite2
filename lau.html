@@ -615,37 +615,32 @@
         // ЗАЩИТА ОТ ПРОСМОТРА ИСХОДНОГО КОДА
         // ============================================
 
-        // 1. Блокировка правой кнопки мыши (контекстного меню)
+        // 1. Блокировка правой кнопки мыши (контекстного меню) - без уведомления
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
-            showNotification('🚫', 'Доступ запрещен', 'Просмотр исходного кода отключен', 'error', 3000);
             return false;
         });
 
-        // 2. Блокировка клавиш для просмотра кода
+        // 2. Блокировка клавиш для просмотра кода - без уведомлений
         document.addEventListener('keydown', function(e) {
             // F12
             if (e.key === 'F12') {
                 e.preventDefault();
-                showNotification('🚫', 'Доступ запрещен', 'Инструменты разработчика отключены', 'error', 3000);
                 return false;
             }
             // Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
             if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) {
                 e.preventDefault();
-                showNotification('🚫', 'Доступ запрещен', 'Инструменты разработчика отключены', 'error', 3000);
                 return false;
             }
             // Ctrl+U (просмотр исходного кода)
             if (e.ctrlKey && e.key === 'u') {
                 e.preventDefault();
-                showNotification('🚫', 'Доступ запрещен', 'Просмотр исходного кода отключен', 'error', 3000);
                 return false;
             }
             // Ctrl+S (сохранение страницы)
             if (e.ctrlKey && e.key === 's') {
                 e.preventDefault();
-                showNotification('🚫', 'Доступ запрещен', 'Сохранение страницы отключено', 'error', 3000);
                 return false;
             }
         });
@@ -662,11 +657,10 @@
             e.preventDefault();
         });
 
-        // 5. Блокировка копирования (кроме полей ввода)
+        // 5. Блокировка копирования (кроме полей ввода) - без уведомления
         document.addEventListener('copy', function(e) {
             if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
                 e.preventDefault();
-                showNotification('🚫', 'Доступ запрещен', 'Копирование текста отключено', 'error', 2000);
             }
         });
 
@@ -678,13 +672,7 @@
         console.debug = function() {};
         console.clear();
 
-        // 7. Защита от переключения вкладки DevTools (обнаружение)
-        let devtools = /./;
-        devtools.toString = function() {
-            showNotification('🚫', 'Обнаружены инструменты разработчика', 'Закройте их для продолжения работы', 'error', 3000);
-        };
-
-        // 8. Блокировка контекстного меню на изображениях
+        // 7. Блокировка контекстного меню на изображениях
         document.querySelectorAll('img').forEach(img => {
             img.addEventListener('contextmenu', function(e) {
                 e.preventDefault();
@@ -692,7 +680,7 @@
             });
         });
 
-        // 9. Защита от iframe (если кто-то попытается вставить страницу в iframe)
+        // 8. Защита от iframe
         if (window.top !== window.self) {
             window.top.location = window.self.location;
         }
