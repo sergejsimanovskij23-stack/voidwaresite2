@@ -425,6 +425,14 @@
             opacity: 0.4;
         }
 
+        /* Блокировка выделения текста */
+        .no-select {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
         @media (max-width: 480px) {
             .glass-card {
                 padding: 2rem 1.5rem;
@@ -512,46 +520,56 @@
         // ЗАЩИТА ОТ ПРОСМОТРА ИСХОДНОГО КОДА
         // ============================================
 
+        // 1. Блокировка правой кнопки мыши (контекстного меню) - без уведомления
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
             return false;
         });
 
+        // 2. Блокировка клавиш для просмотра кода - без уведомлений
         document.addEventListener('keydown', function(e) {
+            // F12
             if (e.key === 'F12') {
                 e.preventDefault();
                 return false;
             }
+            // Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
             if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) {
                 e.preventDefault();
                 return false;
             }
+            // Ctrl+U (просмотр исходного кода)
             if (e.ctrlKey && e.key === 'u') {
                 e.preventDefault();
                 return false;
             }
+            // Ctrl+S (сохранение страницы)
             if (e.ctrlKey && e.key === 's') {
                 e.preventDefault();
                 return false;
             }
         });
 
+        // 3. Блокировка выделения текста (кроме полей ввода)
         document.addEventListener('selectstart', function(e) {
             if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
                 e.preventDefault();
             }
         });
 
+        // 4. Блокировка перетаскивания
         document.addEventListener('dragstart', function(e) {
             e.preventDefault();
         });
 
+        // 5. Блокировка копирования (кроме полей ввода) - без уведомления
         document.addEventListener('copy', function(e) {
             if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
                 e.preventDefault();
             }
         });
 
+        // 6. Очистка консоли и предотвращение вывода
         console.log = function() {};
         console.warn = function() {};
         console.error = function() {};
@@ -559,6 +577,7 @@
         console.debug = function() {};
         console.clear();
 
+        // 7. Блокировка контекстного меню на изображениях
         document.querySelectorAll('img').forEach(img => {
             img.addEventListener('contextmenu', function(e) {
                 e.preventDefault();
@@ -566,35 +585,9 @@
             });
         });
 
+        // 8. Защита от iframe
         if (window.top !== window.self) {
             window.top.location = window.self.location;
-        }
-
-        // ============================================
-        // ШИФР ЦЕЗАРЯ (СДВИГ НА 5) - РАСШИФРОВКА
-        // ============================================
-
-        function caesarDecrypt(text, shift = 5) {
-            if (!text) return text;
-            
-            return text.split('').map(char => {
-                const code = char.charCodeAt(0);
-                
-                // Заглавные буквы A-Z
-                if (code >= 65 && code <= 90) {
-                    let newCode = ((code - 65 - shift) % 26 + 26) % 26 + 65;
-                    return String.fromCharCode(newCode);
-                }
-                // Строчные буквы a-z
-                else if (code >= 97 && code <= 122) {
-                    let newCode = ((code - 97 - shift) % 26 + 26) % 26 + 97;
-                    return String.fromCharCode(newCode);
-                }
-                // Цифры и другие символы не меняем
-                else {
-                    return char;
-                }
-            }).join('');
         }
 
         // ============================================
@@ -654,10 +647,10 @@
 
         function checkCredentials(login, password) {
             return new Promise((resolve, reject) => {
-                fetch('status.txt?_=' + Date.now())
+                fetch('dast.txt')
                     .then(response => {
                         if (!response.ok) {
-                            reject('Файл status.txt не найден');
+                            reject('Файл dast.txt не найден');
                             return;
                         }
                         return response.text();
@@ -667,32 +660,21 @@
                             reject('Файл пуст');
                             return;
                         }
-                        
                         const lines = data.split('\n');
                         let found = false;
-                        
                         for (let line of lines) {
                             line = line.trim();
                             if (line === '') continue;
-                            
-                            // Разделяем на логин и пароль (формат: логин пароль)
                             const parts = line.split(/\s+/);
                             if (parts.length >= 2) {
-                                const encryptedLogin = parts[0];
-                                const encryptedPassword = parts.slice(1).join(' ');
-                                
-                                // Расшифровываем
-                                const decryptedLogin = caesarDecrypt(encryptedLogin, 5);
-                                const decryptedPassword = caesarDecrypt(encryptedPassword, 5);
-                                
-                                // Сравниваем с введенными данными
-                                if (decryptedLogin === login && decryptedPassword === password) {
+                                const fileLogin = parts[0];
+                                const filePassword = parts.slice(1).join(' ');
+                                if (fileLogin === login && filePassword === password) {
                                     found = true;
                                     break;
                                 }
                             }
                         }
-                        
                         resolve(found);
                     })
                     .catch(error => {
