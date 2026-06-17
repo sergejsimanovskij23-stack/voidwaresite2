@@ -53,19 +53,35 @@
             border-radius: 2rem;
             padding: 2rem;
             position: relative;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            transition: transform 0.3s ease, box-shadow 0.5s ease;
         }
         .glass-card::before {
             content: '';
             position: absolute;
-            inset: -1px;
+            inset: -2px;
             border-radius: 2rem;
-            padding: 1.5px;
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(236, 72, 153, 0.2), rgba(251, 191, 36, 0.1));
+            padding: 2px;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.3), rgba(236, 72, 153, 0.3), rgba(251, 191, 36, 0.15));
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
             pointer-events: none;
+            opacity: 0.2;
+            transition: opacity 0.6s ease;
+        }
+        .glass-card:hover::before {
+            opacity: 1;
+        }
+        .glass-card:hover {
+            box-shadow: 0 20px 80px rgba(124, 58, 237, 0.15);
+        }
+
+        .glass-card-inner {
+            transform-style: preserve-3d;
+            transition: transform 0.15s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         .gradient-text {
@@ -99,17 +115,19 @@
             align-items: center;
             justify-content: space-between;
             gap: 1rem;
+            transform-style: preserve-3d;
+            perspective: 500px;
         }
         .version-card:hover {
-            transform: translateY(-3px) scale(1.01);
+            transform: translateY(-4px) scale(1.02) rotateX(2deg);
             background: rgba(255, 255, 255, 0.07);
             border-color: rgba(124, 58, 237, 0.2);
-            box-shadow: 0 12px 40px rgba(124, 58, 237, 0.08);
+            box-shadow: 0 16px 50px rgba(124, 58, 237, 0.1);
         }
         .version-card.selected {
-            border-color: rgba(124, 58, 237, 0.4);
-            background: rgba(124, 58, 237, 0.1);
-            box-shadow: 0 0 40px rgba(124, 58, 237, 0.08);
+            border-color: rgba(124, 58, 237, 0.5);
+            background: rgba(124, 58, 237, 0.12);
+            box-shadow: 0 0 50px rgba(124, 58, 237, 0.12);
         }
         .version-card .badge {
             padding: 0.2rem 0.8rem;
@@ -119,6 +137,10 @@
             text-transform: uppercase;
             letter-spacing: 0.03em;
             white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+        .version-card:hover .badge {
+            transform: scale(1.05) translateZ(5px);
         }
         .badge-alpha {
             background: rgba(239, 68, 68, 0.15);
@@ -154,6 +176,8 @@
             overflow: hidden;
             box-shadow: 0 0 50px rgba(124, 58, 237, 0.2);
             width: 100%;
+            transform-style: preserve-3d;
+            perspective: 500px;
         }
         .btn-primary::after {
             content: '';
@@ -165,8 +189,8 @@
             transition: opacity 0.4s ease;
         }
         .btn-primary:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 20px 70px rgba(124, 58, 237, 0.4);
+            transform: translateY(-4px) scale(1.03) rotateX(3deg);
+            box-shadow: 0 25px 80px rgba(124, 58, 237, 0.5);
         }
         .btn-primary:hover::after {
             opacity: 1;
@@ -195,27 +219,54 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             cursor: pointer;
             transition: all 0.3s ease;
+            transform-style: preserve-3d;
         }
         .btn-secondary:hover {
             background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
+            transform: translateY(-3px) scale(1.02);
         }
         .btn-secondary:disabled {
             opacity: 0.5;
             cursor: not-allowed;
         }
 
+        .btn-exit {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            background: rgba(239, 68, 68, 0.1);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 0.8rem;
+            transform-style: preserve-3d;
+        }
+        .btn-exit:hover {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.4);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(239, 68, 68, 0.15);
+        }
+
         .float-3d {
             display: inline-block;
             animation: float3d 6s ease-in-out infinite;
+            transform-style: preserve-3d;
         }
         @keyframes float3d {
             0%,
             100% {
-                transform: translateY(0) scale(1);
+                transform: translateY(0) scale(1) rotateX(0);
             }
             50% {
-                transform: translateY(-12px) scale(1.05);
+                transform: translateY(-14px) scale(1.06) rotateX(4deg);
             }
         }
 
@@ -388,19 +439,16 @@
             z-index: 1;
         }
 
-        /* Плавное обновление информации */
         .info-value {
             transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
         }
-
         .info-value.fade {
             opacity: 0;
-            transform: translateY(-5px);
+            transform: translateY(-5px) rotateX(5deg);
         }
-
         .info-value.show {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0) rotateX(0);
         }
 
         .loading-overlay {
@@ -434,6 +482,11 @@
             100% { transform: rotate(360deg); }
         }
 
+        .glow-text {
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.2), 0 0 60px rgba(124, 58, 237, 0.05);
+            transition: text-shadow 0.5s;
+        }
+
         @media (max-width: 768px) {
             .bg-main {
                 padding: 1rem;
@@ -449,12 +502,14 @@
             .version-card .name {
                 font-size: 0.95rem;
             }
+            .version-card {
+                gap: 0.5rem;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Загрузочный экран -->
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-spinner"></div>
         <p class="text-white/60 text-sm">Загрузка статуса сервера...</p>
@@ -470,12 +525,11 @@
 
         <div class="content max-w-6xl mx-auto">
 
-            <!-- ШАПКА -->
             <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-8">
                 <div class="flex items-center gap-4">
                     <div class="text-4xl float-3d">🎮</div>
                     <div>
-                        <h1 class="text-3xl md:text-4xl font-black tracking-tight">
+                        <h1 class="text-3xl md:text-4xl font-black tracking-tight glow-text">
                             <span class="gradient-text">VoidWare</span> Launcher
                         </h1>
                         <p class="text-white/30 text-sm flex items-center gap-2">
@@ -493,113 +547,118 @@
                 </div>
             </div>
 
-            <!-- ОСНОВНАЯ СЕТКА -->
             <div class="grid lg:grid-cols-3 gap-6">
 
-                <!-- ЛЕВАЯ КОЛОНКА: ВЕРСИИ -->
                 <div class="lg:col-span-2">
-                    <div class="glass-card">
-                        <h2 class="text-xl font-bold mb-4">📦 Выберите версию</h2>
+                    <div class="glass-card" id="versionCard">
+                        <div class="glass-card-inner" id="versionCardInner">
+                            <h2 class="text-xl font-bold mb-4 glow-text">📦 Выберите версию</h2>
 
-                        <div class="flex flex-col gap-3" id="versionList">
-                            <div class="version-card selected" data-version="1.21.11" data-type="stable" data-users="30" data-rating="4.9">
-                                <div class="flex items-center gap-3">
-                                    <span>🚀</span>
-                                    <div>
-                                        <div class="name font-semibold">1.21.11</div>
-                                        <div class="text-white/40 text-xs">Стабильная версия с полной поддержкой</div>
+                            <div class="flex flex-col gap-4" id="versionList">
+                                <div class="version-card selected" data-version="1.21.11" data-type="stable" data-users="30" data-rating="4.9">
+                                    <div class="flex items-center gap-3">
+                                        <span>🚀</span>
+                                        <div>
+                                            <div class="name font-semibold">1.21.11</div>
+                                            <div class="text-white/40 text-xs">Стабильная версия с полной поддержкой</div>
+                                        </div>
+                                    </div>
+                                    <span class="badge badge-stable">Стабильная</span>
+                                    <div class="flex items-center gap-2">
+                                        <span class="status-dot online version-status" id="versionStatus1"></span>
+                                        <span class="text-white/40 text-xs version-users" id="versionUsers1">30</span>
                                     </div>
                                 </div>
-                                <span class="badge badge-stable">Стабильная</span>
-                                <div class="flex items-center gap-2">
-                                    <span class="status-dot online version-status" id="versionStatus1"></span>
-                                    <span class="text-white/40 text-xs version-users" id="versionUsers1">30</span>
+
+                                <div class="version-card" data-version="1.16.5 Alpha" data-type="alpha" data-users="15" data-rating="4.7">
+                                    <div class="flex items-center gap-3">
+                                        <span>⚔️</span>
+                                        <div>
+                                            <div class="name font-semibold">1.16.5 Alpha</div>
+                                            <div class="text-white/40 text-xs">Тестовая версия с новыми функциями</div>
+                                        </div>
+                                    </div>
+                                    <span class="badge badge-alpha">Alpha</span>
+                                    <div class="flex items-center gap-2">
+                                        <span class="status-dot online version-status" id="versionStatus2"></span>
+                                        <span class="text-white/40 text-xs version-users" id="versionUsers2">15</span>
+                                    </div>
+                                </div>
+
+                                <div class="version-card" data-version="1.16.5 Free" data-type="free" data-users="10" data-rating="4.5">
+                                    <div class="flex items-center gap-3">
+                                        <span>🎯</span>
+                                        <div>
+                                            <div class="name font-semibold">1.16.5 Free</div>
+                                            <div class="text-white/40 text-xs">Бесплатная версия с базовыми функциями</div>
+                                        </div>
+                                    </div>
+                                    <span class="badge badge-free">Free</span>
+                                    <div class="flex items-center gap-2">
+                                        <span class="status-dot online version-status" id="versionStatus3"></span>
+                                        <span class="text-white/40 text-xs version-users" id="versionUsers3">10</span>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="version-card" data-version="1.16.5 Alpha" data-type="alpha" data-users="15" data-rating="4.7">
-                                <div class="flex items-center gap-3">
-                                    <span>⚔️</span>
-                                    <div>
-                                        <div class="name font-semibold">1.16.5 Alpha</div>
-                                        <div class="text-white/40 text-xs">Тестовая версия с новыми функциями</div>
-                                    </div>
-                                </div>
-                                <span class="badge badge-alpha">Alpha</span>
-                                <div class="flex items-center gap-2">
-                                    <span class="status-dot online version-status" id="versionStatus2"></span>
-                                    <span class="text-white/40 text-xs version-users" id="versionUsers2">15</span>
-                                </div>
+                            <div class="mt-5">
+                                <button id="launchBtn" class="btn-primary">
+                                    <span>🚀 Запустить выбранную версию</span>
+                                </button>
                             </div>
 
-                            <div class="version-card" data-version="1.16.5 Free" data-type="free" data-users="10" data-rating="4.5">
-                                <div class="flex items-center gap-3">
-                                    <span>🎯</span>
-                                    <div>
-                                        <div class="name font-semibold">1.16.5 Free</div>
-                                        <div class="text-white/40 text-xs">Бесплатная версия с базовыми функциями</div>
-                                    </div>
-                                </div>
-                                <span class="badge badge-free">Free</span>
-                                <div class="flex items-center gap-2">
-                                    <span class="status-dot online version-status" id="versionStatus3"></span>
-                                    <span class="text-white/40 text-xs version-users" id="versionUsers3">10</span>
-                                </div>
+                            <div class="mt-3 flex flex-wrap gap-2 text-xs text-white/30">
+                                <span>📁 Размер: ~150MB</span>
+                                <span>•</span>
+                                <span>🔄 Последнее обновление: сегодня</span>
+                                <span>•</span>
+                                <span id="onlineCountDisplay">👥 55 онлайн</span>
                             </div>
-                        </div>
-
-                        <div class="mt-5">
-                            <button id="launchBtn" class="btn-primary">
-                                <span>🚀 Запустить выбранную версию</span>
-                            </button>
-                        </div>
-
-                        <div class="mt-3 flex flex-wrap gap-2 text-xs text-white/30">
-                            <span>📁 Размер: ~150MB</span>
-                            <span>•</span>
-                            <span>🔄 Последнее обновление: сегодня</span>
-                            <span>•</span>
-                            <span id="onlineCountDisplay">👥 55 онлайн</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- ПРАВАЯ КОЛОНКА: ИНФО -->
                 <div>
-                    <div class="glass-card">
-                        <h2 class="text-xl font-bold mb-4">📊 Информация</h2>
+                    <div class="glass-card" id="infoCard">
+                        <div class="glass-card-inner" id="infoCardInner">
+                            <h2 class="text-xl font-bold mb-4 glow-text">📊 Информация</h2>
 
-                        <div class="space-y-3">
-                            <div class="flex justify-between items-center border-b border-white/5 pb-2">
-                                <span class="text-white/40 text-sm">Выбрано</span>
-                                <span class="font-semibold text-purple-300 info-value show" id="selectedVersionDisplay">1.21.11</span>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center border-b border-white/5 pb-2">
+                                    <span class="text-white/40 text-sm">Выбрано</span>
+                                    <span class="font-semibold text-purple-300 info-value show" id="selectedVersionDisplay">1.21.11</span>
+                                </div>
+                                <div class="flex justify-between items-center border-b border-white/5 pb-2">
+                                    <span class="text-white/40 text-sm">Тип</span>
+                                    <span class="badge badge-stable info-value show" id="selectedTypeDisplay">Стабильная</span>
+                                </div>
+                                <div class="flex justify-between items-center border-b border-white/5 pb-2">
+                                    <span class="text-white/40 text-sm">Пользователей</span>
+                                    <span class="text-white/60 info-value show" id="selectedUsersDisplay">30</span>
+                                </div>
+                                <div class="flex justify-between items-center border-b border-white/5 pb-2">
+                                    <span class="text-white/40 text-sm">Рейтинг</span>
+                                    <span class="text-yellow-400 info-value show" id="selectedRatingDisplay">★★★★★ 4.9</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-white/40 text-sm">Статус</span>
+                                    <span class="text-green-400 text-sm flex items-center gap-1" id="infoStatusDisplay">
+                                        <span class="status-dot online" id="infoStatusDot"></span>
+                                        <span id="infoStatusText">Онлайн</span>
+                                    </span>
+                                </div>
                             </div>
-                            <div class="flex justify-between items-center border-b border-white/5 pb-2">
-                                <span class="text-white/40 text-sm">Тип</span>
-                                <span class="badge badge-stable info-value show" id="selectedTypeDisplay">Стабильная</span>
-                            </div>
-                            <div class="flex justify-between items-center border-b border-white/5 pb-2">
-                                <span class="text-white/40 text-sm">Пользователей</span>
-                                <span class="text-white/60 info-value show" id="selectedUsersDisplay">30</span>
-                            </div>
-                            <div class="flex justify-between items-center border-b border-white/5 pb-2">
-                                <span class="text-white/40 text-sm">Рейтинг</span>
-                                <span class="text-yellow-400 info-value show" id="selectedRatingDisplay">★★★★★ 4.9</span>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span class="text-white/40 text-sm">Статус</span>
-                                <span class="text-green-400 text-sm flex items-center gap-1" id="infoStatusDisplay">
-                                    <span class="status-dot online" id="infoStatusDot"></span>
-                                    <span id="infoStatusText">Онлайн</span>
-                                </span>
-                            </div>
+
+                            <button id="exitBtn" class="btn-exit">
+                                <span>🚪 Выйти</span>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                            </button>
                         </div>
                     </div>
                 </div>
 
             </div>
 
-            <!-- ФУТЕР -->
             <div class="mt-6 flex flex-wrap justify-between items-center gap-3 text-white/20 text-xs border-t border-white/5 pt-4">
                 <span>VoidWare Launcher v2.0 · © 2026</span>
                 <span>⚡ Made with ❤️ for Minecraft</span>
@@ -615,56 +674,46 @@
         // ЗАЩИТА ОТ ПРОСМОТРА ИСХОДНОГО КОДА
         // ============================================
 
-        // 1. Блокировка правой кнопки мыши (контекстного меню) - без уведомления
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
             return false;
         });
 
-        // 2. Блокировка клавиш для просмотра кода - без уведомлений
         document.addEventListener('keydown', function(e) {
-            // F12
             if (e.key === 'F12') {
                 e.preventDefault();
                 return false;
             }
-            // Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
             if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) {
                 e.preventDefault();
                 return false;
             }
-            // Ctrl+U (просмотр исходного кода)
             if (e.ctrlKey && e.key === 'u') {
                 e.preventDefault();
                 return false;
             }
-            // Ctrl+S (сохранение страницы)
             if (e.ctrlKey && e.key === 's') {
                 e.preventDefault();
                 return false;
             }
         });
 
-        // 3. Блокировка выделения текста (кроме полей ввода)
         document.addEventListener('selectstart', function(e) {
             if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
                 e.preventDefault();
             }
         });
 
-        // 4. Блокировка перетаскивания
         document.addEventListener('dragstart', function(e) {
             e.preventDefault();
         });
 
-        // 5. Блокировка копирования (кроме полей ввода) - без уведомления
         document.addEventListener('copy', function(e) {
             if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
                 e.preventDefault();
             }
         });
 
-        // 6. Очистка консоли и предотвращение вывода
         console.log = function() {};
         console.warn = function() {};
         console.error = function() {};
@@ -672,18 +721,37 @@
         console.debug = function() {};
         console.clear();
 
-        // 7. Блокировка контекстного меню на изображениях
-        document.querySelectorAll('img').forEach(img => {
-            img.addEventListener('contextmenu', function(e) {
-                e.preventDefault();
-                return false;
-            });
-        });
-
-        // 8. Защита от iframe
         if (window.top !== window.self) {
             window.top.location = window.self.location;
         }
+
+        // ============================================
+        // 3D TILT ЭФФЕКТЫ ДЛЯ КАРТОЧЕК
+        // ============================================
+
+        const versionCard = document.getElementById('versionCard');
+        const versionCardInner = document.getElementById('versionCardInner');
+        const infoCard = document.getElementById('infoCard');
+        const infoCardInner = document.getElementById('infoCardInner');
+
+        function setupTilt(card, inner) {
+            card.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -6;
+                const rotateY = ((x - centerX) / centerX) * 6;
+                inner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
+            });
+            card.addEventListener('mouseleave', function() {
+                inner.style.transform = 'rotateX(0deg) rotateY(0deg) translateZ(0px)';
+            });
+        }
+
+        setupTilt(versionCard, versionCardInner);
+        setupTilt(infoCard, infoCardInner);
 
         // ============================================
         // ОСНОВНАЯ ЛОГИКА
@@ -691,6 +759,7 @@
 
         const versionCards = document.querySelectorAll('.version-card');
         const launchBtn = document.getElementById('launchBtn');
+        const exitBtn = document.getElementById('exitBtn');
         const checkUpdatesBtn = document.getElementById('checkUpdatesBtn');
         const container = document.getElementById('notificationContainer');
         const selectedVersionDisplay = document.getElementById('selectedVersionDisplay');
@@ -713,7 +782,6 @@
         let lastStatus = null;
         let firstLoad = true;
 
-        // Версионные статусы и пользователи
         const versionStatuses = [
             document.getElementById('versionStatus1'),
             document.getElementById('versionStatus2'),
@@ -724,8 +792,6 @@
             document.getElementById('versionUsers2'),
             document.getElementById('versionUsers3')
         ];
-
-        // Базовые значения пользователей для каждой версии (в сумме 55)
         const baseUsers = [30, 15, 10];
 
         function showNotification(icon, title, text, type = 'info', duration = 4000) {
@@ -742,13 +808,10 @@
                 <button class="close-btn" onclick="closeNotification('${id}')">✕</button>
                 <div class="progress-bar"></div>
             `;
-
             container.appendChild(notif);
             setTimeout(() => notif.classList.add('show'), 50);
-
             const timer = setTimeout(() => closeNotification(id), duration);
             notif.dataset.timer = timer;
-
             return id;
         }
 
@@ -760,30 +823,19 @@
             setTimeout(() => notif.remove(), 500);
         }
 
-        // Чтение статуса из файла status.txt
         async function checkServerStatus() {
             try {
                 const response = await fetch('status.txt?_=' + Date.now());
-                
-                if (!response.ok) {
-                    return false;
-                }
-                
+                if (!response.ok) return false;
                 const text = await response.text();
-                const firstLine = text.split('\n')[0].trim();
-                return firstLine === 'VoidWare';
-                
+                return text.split('\n')[0].trim() === 'VoidWare';
             } catch (error) {
                 return false;
             }
         }
 
-        // Обновление интерфейса в зависимости от статуса
         function updateUI(status, showNotif = false) {
-            if (status === lastStatus && !firstLoad) {
-                return;
-            }
-
+            if (status === lastStatus && !firstLoad) return;
             isOnline = status;
             lastStatus = status;
             firstLoad = false;
@@ -808,69 +860,48 @@
                 launchBtn.disabled = true;
             }
 
-            // Обновляем статусы и пользователей для каждой версии
             versionCards.forEach((card, index) => {
                 const statusDotVersion = versionStatuses[index];
                 const usersElement = versionUsersElements[index];
-                const baseUserCount = baseUsers[index];
-
                 if (isOnline) {
                     statusDotVersion.className = 'status-dot online';
-                    const users = card.dataset.users || baseUserCount;
+                    const users = card.dataset.users || baseUsers[index];
                     usersElement.textContent = users;
-                    card.dataset.users = users;
                 } else {
                     statusDotVersion.className = 'status-dot offline';
                     usersElement.textContent = '0';
                 }
             });
 
-            // Обновляем отображение пользователей в информации
             const currentCard = document.querySelector('.version-card.selected');
             if (currentCard) {
                 const users = currentCard.dataset.users;
-                if (isOnline) {
-                    updateInfoDisplay(selectedUsersDisplay, users, false);
-                } else {
-                    updateInfoDisplay(selectedUsersDisplay, '0', false);
-                }
+                updateInfoDisplay(selectedUsersDisplay, isOnline ? users : '0', false);
             }
 
-            // Показываем уведомление только если статус изменился
             if (showNotif && lastStatus !== null) {
-                if (isOnline) {
-                    showNotification('🟢', 'Сервер онлайн', 'Сервер успешно подключен!', 'success', 3000);
-                } else {
-                    showNotification('🔴', 'Сервер офлайн', 'Сервера выключены', 'error', 3000);
-                }
+                showNotification(isOnline ? '🟢' : '🔴', isOnline ? 'Сервер онлайн' : 'Сервер офлайн', isOnline ? 'Сервер успешно подключен!' : 'Сервера выключены', isOnline ? 'success' : 'error', 3000);
             }
         }
 
-        // Загрузка статуса при старте
         async function loadStatus() {
             loadingOverlay.classList.remove('hidden');
-            
             const status = await checkServerStatus();
             lastStatus = status;
             updateUI(status, true);
-            
             loadingOverlay.classList.add('hidden');
         }
 
-        // Автоматическое обновление статуса каждые 4 секунды
         async function autoRefreshStatus() {
             const status = await checkServerStatus();
             updateUI(status, true);
         }
 
-        // Проверка обновлений
         checkUpdatesBtn.addEventListener('click', function() {
             const btn = this;
             btn.disabled = true;
             btn.textContent = '⏳ Проверка...';
-
             showNotification('🔄', 'Обновление', 'Проверка обновлений...', 'info', 2500);
-
             setTimeout(() => {
                 showNotification('✅', 'Обновление', 'Новых обновлений не найдено!', 'success', 3000);
                 btn.disabled = false;
@@ -878,23 +909,15 @@
             }, 2800);
         });
 
-        // Плавное обновление информации
         function updateInfoDisplay(element, newText, isBadge = false) {
             element.classList.remove('show');
             element.classList.add('fade');
-
             setTimeout(() => {
                 if (isBadge) {
                     element.textContent = newText;
-                    const badgeClasses = {
-                        'alpha': 'badge-alpha',
-                        'stable': 'badge-stable',
-                        'free': 'badge-free'
-                    };
+                    const badgeClasses = { 'alpha': 'badge-alpha', 'stable': 'badge-stable', 'free': 'badge-free' };
                     element.className = 'badge info-value show';
-                    if (badgeClasses[selectedType]) {
-                        element.classList.add(badgeClasses[selectedType]);
-                    }
+                    if (badgeClasses[selectedType]) element.classList.add(badgeClasses[selectedType]);
                 } else {
                     element.textContent = newText;
                 }
@@ -903,7 +926,7 @@
             }, 300);
         }
 
-        versionCards.forEach((card, index) => {
+        versionCards.forEach((card) => {
             card.addEventListener('click', function() {
                 versionCards.forEach(c => c.classList.remove('selected'));
                 this.classList.add('selected');
@@ -919,23 +942,19 @@
                 selectedRating = newRating;
 
                 updateInfoDisplay(selectedVersionDisplay, selectedVersion, false);
-
-                const typeLabels = {
-                    'alpha': 'Alpha',
-                    'stable': 'Стабильная',
-                    'free': 'Free'
-                };
+                const typeLabels = { 'alpha': 'Alpha', 'stable': 'Стабильная', 'free': 'Free' };
                 updateInfoDisplay(selectedTypeDisplay, typeLabels[selectedType] || selectedType, true);
-
-                if (isOnline) {
-                    updateInfoDisplay(selectedUsersDisplay, selectedUsers, false);
-                } else {
-                    updateInfoDisplay(selectedUsersDisplay, '0', false);
-                }
-
+                updateInfoDisplay(selectedUsersDisplay, isOnline ? selectedUsers : '0', false);
                 const stars = '★'.repeat(Math.round(parseFloat(newRating))) + '☆'.repeat(5 - Math.round(parseFloat(newRating)));
                 updateInfoDisplay(selectedRatingDisplay, `${stars} ${newRating}`, false);
             });
+        });
+
+        exitBtn.addEventListener('click', function() {
+            showNotification('🚪', 'Выход', 'Перенаправление...', 'info', 2000);
+            setTimeout(() => {
+                window.location.href = 'data.html';
+            }, 1500);
         });
 
         launchBtn.addEventListener('click', function() {
@@ -944,12 +963,10 @@
                 return;
             }
 
-            let emoji = '🚀';
-            let msg = 'Запуск ' + selectedVersion + '...';
-
-            if (selectedType === 'alpha') { emoji = '⚔️'; }
-            else if (selectedType === 'stable') { emoji = '🚀'; }
-            else if (selectedType === 'free') { emoji = '🎯'; }
+            let emoji = '🚀', msg = 'Запуск ' + selectedVersion + '...';
+            if (selectedType === 'alpha') emoji = '⚔️';
+            else if (selectedType === 'stable') emoji = '🚀';
+            else if (selectedType === 'free') emoji = '🎯';
 
             this.disabled = true;
             this.innerHTML = '<span>⏳ Запуск...</span>';
@@ -963,7 +980,6 @@
             }, 3000);
         });
 
-        // Particles
         (function initParticles() {
             const canvas = document.getElementById('particles-canvas');
             const ctx = canvas.getContext('2d');
@@ -1027,7 +1043,6 @@
             animate();
         })();
 
-        // Falling blocks
         (function initFallingBlocks() {
             const container = document.getElementById('fallingBlocks');
             const icons = ['⛏️', '⚔️', '💎', '🛡️', '🚀', '✨'];
@@ -1045,10 +1060,7 @@
             }
         })();
 
-        // Загружаем статус при запуске
         loadStatus();
-
-        // Автоматическое обновление статуса каждые 4 секунды
         setInterval(autoRefreshStatus, 4000);
     </script>
 
