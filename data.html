@@ -13,10 +13,6 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
         }
         html,
         body {
@@ -89,8 +85,7 @@
             animation: neonPulse 2.5s ease-in-out infinite;
         }
         @keyframes neonPulse {
-            0%,
-            100% {
+            0%, 100% {
                 box-shadow: 0 0 20px rgba(124, 58, 237, 0.15), 0 0 60px rgba(124, 58, 237, 0.05);
             }
             50% {
@@ -107,15 +102,9 @@
             animation: gradientMove 6s ease-in-out infinite alternate;
         }
         @keyframes gradientMove {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .input-field {
@@ -129,10 +118,6 @@
             transition: all 0.3s ease;
             outline: none;
             font-family: 'Inter', sans-serif;
-            user-select: text;
-            -webkit-user-select: text;
-            -moz-user-select: text;
-            -ms-user-select: text;
         }
         .input-field:focus {
             border-color: rgba(124, 58, 237, 0.5);
@@ -175,13 +160,8 @@
             transform: translateY(-3px) scale(1.02);
             box-shadow: 0 20px 70px rgba(124, 58, 237, 0.4);
         }
-        .btn-primary:hover::after {
-            opacity: 1;
-        }
-        .btn-primary span {
-            position: relative;
-            z-index: 1;
-        }
+        .btn-primary:hover::after { opacity: 1; }
+        .btn-primary span { position: relative; z-index: 1; }
 
         .btn-primary:disabled {
             opacity: 0.7;
@@ -219,14 +199,8 @@
             position: relative;
             overflow: hidden;
         }
-        .notification.show {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        .notification.hide {
-            transform: translateX(120%);
-            opacity: 0;
-        }
+        .notification.show { transform: translateX(0); opacity: 1; }
+        .notification.hide { transform: translateX(120%); opacity: 0; }
         .notification::before {
             content: '';
             position: absolute;
@@ -240,60 +214,24 @@
             mask-composite: exclude;
             pointer-events: none;
         }
-        .notification .icon {
-            font-size: 1.4rem;
-            flex-shrink: 0;
-        }
-        .notification .content {
-            flex: 1;
-        }
-        .notification .title {
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: #fff;
-        }
-        .notification .text {
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.6);
-            margin-top: 0.05rem;
-        }
+        .notification .icon { font-size: 1.4rem; flex-shrink: 0; }
+        .notification .content { flex: 1; }
+        .notification .title { font-size: 0.85rem; font-weight: 700; color: #fff; }
+        .notification .text { font-size: 0.8rem; color: rgba(255, 255, 255, 0.6); margin-top: 0.05rem; }
         .notification .close-btn {
-            background: none;
-            border: none;
-            color: rgba(255, 255, 255, 0.3);
-            cursor: pointer;
-            font-size: 1.2rem;
-            padding: 0.2rem;
-            transition: color 0.3s;
-            flex-shrink: 0;
-            pointer-events: auto;
+            background: none; border: none; color: rgba(255,255,255,0.3); cursor: pointer;
+            font-size: 1.2rem; padding: 0.2rem; transition: color 0.3s; flex-shrink: 0; pointer-events: auto;
         }
-        .notification .close-btn:hover {
-            color: rgba(255, 255, 255, 0.7);
-        }
+        .notification .close-btn:hover { color: rgba(255,255,255,0.7); }
         .notification .progress-bar {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            height: 3px;
+            position: absolute; bottom: 0; left: 0; height: 3px;
             background: linear-gradient(90deg, #7C3AED, #EC4899);
             border-radius: 0 0 1rem 1rem;
             animation: progress 4s linear forwards;
         }
-        .notification.error .progress-bar {
-            background: linear-gradient(90deg, #ef4444, #dc2626);
-        }
-        .notification.success .progress-bar {
-            background: linear-gradient(90deg, #22c55e, #16a34a);
-        }
-        @keyframes progress {
-            0% {
-                width: 100%;
-            }
-            100% {
-                width: 0%;
-            }
-        }
+        .notification.error .progress-bar { background: linear-gradient(90deg, #ef4444, #dc2626); }
+        .notification.success .progress-bar { background: linear-gradient(90deg, #22c55e, #16a34a); }
+        @keyframes progress { 0% { width: 100%; } 100% { width: 0%; } }
 
         .float-3d {
             display: inline-block;
@@ -301,170 +239,74 @@
             transform-style: preserve-3d;
         }
         @keyframes float3d {
-            0%,
-            100% {
-                transform: translateY(0) rotateX(0) rotateY(0) scale(1);
-            }
-            25% {
-                transform: translateY(-15px) rotateX(8deg) rotateY(12deg) scale(1.06);
-            }
-            75% {
-                transform: translateY(8px) rotateX(-5deg) rotateY(-10deg) scale(0.94);
-            }
+            0%,100% { transform: translateY(0) rotateX(0) rotateY(0) scale(1); }
+            25% { transform: translateY(-15px) rotateX(8deg) rotateY(12deg) scale(1.06); }
+            75% { transform: translateY(8px) rotateX(-5deg) rotateY(-10deg) scale(0.94); }
         }
 
         .ring-3d {
-            width: 350px;
-            height: 350px;
-            border-radius: 50%;
-            border: 2px solid rgba(124, 58, 237, 0.06);
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotateX(70deg) rotateZ(0deg);
-            animation: ringSpin 20s linear infinite;
-            transform-style: preserve-3d;
-            pointer-events: none;
-            z-index: 0;
+            width: 350px; height: 350px; border-radius: 50%;
+            border: 2px solid rgba(124,58,237,0.06); position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%,-50%) rotateX(70deg) rotateZ(0deg);
+            animation: ringSpin 20s linear infinite; transform-style: preserve-3d;
+            pointer-events: none; z-index: 0;
         }
         .ring-3d::before {
-            content: '';
-            position: absolute;
-            inset: -20px;
-            border-radius: 50%;
-            border: 1px solid rgba(236, 72, 153, 0.05);
+            content: ''; position: absolute; inset: -20px; border-radius: 50%;
+            border: 1px solid rgba(236,72,153,0.05);
             animation: ringSpin 15s linear infinite reverse;
         }
         .ring-3d::after {
-            content: '';
-            position: absolute;
-            inset: -40px;
-            border-radius: 50%;
-            border: 1px solid rgba(251, 191, 36, 0.03);
+            content: ''; position: absolute; inset: -40px; border-radius: 50%;
+            border: 1px solid rgba(251,191,36,0.03);
             animation: ringSpin 25s linear infinite;
         }
         @keyframes ringSpin {
-            0% {
-                transform: translate(-50%, -50%) rotateX(70deg) rotateZ(0deg);
-            }
-            100% {
-                transform: translate(-50%, -50%) rotateX(70deg) rotateZ(360deg);
-            }
+            0% { transform: translate(-50%,-50%) rotateX(70deg) rotateZ(0deg); }
+            100% { transform: translate(-50%,-50%) rotateX(70deg) rotateZ(360deg); }
         }
 
         .glow-orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(100px);
-            pointer-events: none;
-            opacity: 0.3;
+            position: absolute; border-radius: 50%; filter: blur(100px);
+            pointer-events: none; opacity: 0.3;
             animation: orbPulse 5s ease-in-out infinite;
         }
         @keyframes orbPulse {
-            0%,
-            100% {
-                transform: scale(1);
-                opacity: 0.2;
-            }
-            50% {
-                transform: scale(1.4);
-                opacity: 0.5;
-            }
+            0%,100% { transform: scale(1); opacity: 0.2; }
+            50% { transform: scale(1.4); opacity: 0.5; }
         }
 
         .falling-blocks-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 0; overflow: hidden;
         }
         .falling-block {
-            position: absolute;
-            width: 24px;
-            height: 24px;
-            background: rgba(124, 58, 237, 0.08);
-            border: 1px solid rgba(124, 58, 237, 0.12);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transform: rotate(45deg);
-            animation: fall linear infinite;
-            opacity: 0;
-            font-size: 14px;
+            position: absolute; width: 24px; height: 24px;
+            background: rgba(124,58,237,0.08); border: 1px solid rgba(124,58,237,0.12);
+            border-radius: 8px; display: flex; align-items: center; justify-content: center;
+            transform: rotate(45deg); animation: fall linear infinite; opacity: 0; font-size: 14px;
         }
         @keyframes fall {
-            0% {
-                transform: translateY(-50px) rotate(0deg) scale(0.5);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.5;
-            }
-            90% {
-                opacity: 0.5;
-            }
-            100% {
-                transform: translateY(calc(100vh + 100px)) rotate(720deg) scale(1.2);
-                opacity: 0;
-            }
+            0% { transform: translateY(-50px) rotate(0deg) scale(0.5); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(calc(100vh + 100px)) rotate(720deg) scale(1.2); opacity: 0; }
         }
 
         #particles-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-            opacity: 0.4;
-        }
-
-        /* Блокировка выделения текста */
-        .no-select {
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; pointer-events: none; opacity: 0.4;
         }
 
         @media (max-width: 480px) {
-            .glass-card {
-                padding: 2rem 1.5rem;
-                margin: 1rem;
-                border-radius: 1.5rem;
-            }
-            .input-field {
-                padding: 0.7rem 1rem;
-                font-size: 0.9rem;
-            }
-            .btn-primary {
-                padding: 0.7rem 1.6rem;
-                font-size: 0.9rem;
-            }
-            .ring-3d {
-                width: 200px;
-                height: 200px;
-            }
-            .ring-3d::before {
-                inset: -15px;
-            }
-            .ring-3d::after {
-                inset: -30px;
-            }
-            .notification-container {
-                top: 10px;
-                right: 10px;
-                max-width: calc(100% - 20px);
-            }
-            .notification {
-                padding: 0.7rem 1rem;
-            }
+            .glass-card { padding: 2rem 1.5rem; margin: 1rem; border-radius: 1.5rem; }
+            .input-field { padding: 0.7rem 1rem; font-size: 0.9rem; }
+            .btn-primary { padding: 0.7rem 1.6rem; font-size: 0.9rem; }
+            .ring-3d { width: 200px; height: 200px; }
+            .ring-3d::before { inset: -15px; }
+            .ring-3d::after { inset: -30px; }
+            .notification-container { top: 10px; right: 10px; max-width: calc(100% - 20px); }
+            .notification { padding: 0.7rem 1rem; }
         }
     </style>
 </head>
@@ -474,14 +316,11 @@
     <canvas id="particles-canvas"></canvas>
 
     <div class="bg-gradient-main">
-
         <div class="glow-orb" style="width:500px;height:500px;top:-200px;right:-150px;background:radial-gradient(circle,rgba(124,58,237,0.2),transparent);animation-delay:0s;"></div>
         <div class="glow-orb" style="width:400px;height:400px;bottom:-150px;left:-100px;background:radial-gradient(circle,rgba(236,72,153,0.15),transparent);animation-delay:2s;"></div>
-
         <div class="ring-3d"></div>
 
         <div class="glass-card neon-pulse">
-
             <div style="text-align:center;margin-bottom:2rem;">
                 <div style="font-size:3rem;display:inline-block;" class="float-3d">🔐</div>
                 <h1 class="text-3xl font-black tracking-tight mt-2">
@@ -490,17 +329,15 @@
                 <p style="color:rgba(255,255,255,0.3);font-size:0.9rem;margin-top:0.3rem;">Введите логин и пароль для доступа</p>
             </div>
 
-            <form id="loginForm" onsubmit="return false;">
+            <form id="loginForm">
                 <div style="margin-bottom:1.2rem;">
                     <label style="display:block;font-size:0.85rem;font-weight:600;color:rgba(255,255,255,0.5);margin-bottom:0.4rem;">Логин</label>
                     <input type="text" id="loginInput" class="input-field" placeholder="Введите логин" autocomplete="username" />
                 </div>
-
                 <div style="margin-bottom:1.5rem;">
                     <label style="display:block;font-size:0.85rem;font-weight:600;color:rgba(255,255,255,0.5);margin-bottom:0.4rem;">Пароль</label>
                     <input type="password" id="passwordInput" class="input-field" placeholder="Введите пароль" autocomplete="current-password" />
                 </div>
-
                 <button type="submit" id="loginBtn" class="btn-primary">
                     <span>Войти</span>
                     <svg class="w-5 h-5 relative z-10" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
@@ -516,83 +353,7 @@
     <div class="notification-container" id="notificationContainer"></div>
 
     <script>
-        // ============================================
-        // ЗАЩИТА ОТ ПРОСМОТРА ИСХОДНОГО КОДА
-        // ============================================
-
-        // 1. Блокировка правой кнопки мыши (контекстного меню) - без уведомления
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-            return false;
-        });
-
-        // 2. Блокировка клавиш для просмотра кода - без уведомлений
-        document.addEventListener('keydown', function(e) {
-            // F12
-            if (e.key === 'F12') {
-                e.preventDefault();
-                return false;
-            }
-            // Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
-            if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) {
-                e.preventDefault();
-                return false;
-            }
-            // Ctrl+U (просмотр исходного кода)
-            if (e.ctrlKey && e.key === 'u') {
-                e.preventDefault();
-                return false;
-            }
-            // Ctrl+S (сохранение страницы)
-            if (e.ctrlKey && e.key === 's') {
-                e.preventDefault();
-                return false;
-            }
-        });
-
-        // 3. Блокировка выделения текста (кроме полей ввода)
-        document.addEventListener('selectstart', function(e) {
-            if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
-                e.preventDefault();
-            }
-        });
-
-        // 4. Блокировка перетаскивания
-        document.addEventListener('dragstart', function(e) {
-            e.preventDefault();
-        });
-
-        // 5. Блокировка копирования (кроме полей ввода) - без уведомления
-        document.addEventListener('copy', function(e) {
-            if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
-                e.preventDefault();
-            }
-        });
-
-        // 6. Очистка консоли и предотвращение вывода
-        console.log = function() {};
-        console.warn = function() {};
-        console.error = function() {};
-        console.info = function() {};
-        console.debug = function() {};
-        console.clear();
-
-        // 7. Блокировка контекстного меню на изображениях
-        document.querySelectorAll('img').forEach(img => {
-            img.addEventListener('contextmenu', function(e) {
-                e.preventDefault();
-                return false;
-            });
-        });
-
-        // 8. Защита от iframe
-        if (window.top !== window.self) {
-            window.top.location = window.self.location;
-        }
-
-        // ============================================
-        // ОСНОВНАЯ ЛОГИКА
-        // ============================================
+        // ====== ВСЯ СТАРАЯ "ЗАЩИТА" УДАЛЕНА — ОНА БЕСПОЛЕЗНА ======
 
         const loginForm = document.getElementById('loginForm');
         const loginInput = document.getElementById('loginInput');
@@ -605,26 +366,44 @@
             const notif = document.createElement('div');
             notif.className = `notification ${type}`;
             notif.id = `notif-${id}`;
-            notif.innerHTML = `
-                <span class="icon">${icon}</span>
-                <div class="content">
-                    <div class="title">${title}</div>
-                    <div class="text">${text}</div>
-                </div>
-                <button class="close-btn" onclick="closeNotification('${id}')">✕</button>
-                <div class="progress-bar"></div>
-            `;
+
+            // Безопасное создание элементов через DOM, никакого innerHTML с данными пользователя
+            const iconSpan = document.createElement('span');
+            iconSpan.className = 'icon';
+            iconSpan.textContent = icon;
+
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'content';
+
+            const titleDiv = document.createElement('div');
+            titleDiv.className = 'title';
+            titleDiv.textContent = title;
+
+            const textDiv = document.createElement('div');
+            textDiv.className = 'text';
+            textDiv.textContent = text;
+
+            contentDiv.appendChild(titleDiv);
+            contentDiv.appendChild(textDiv);
+
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'close-btn';
+            closeBtn.textContent = '✕';
+            closeBtn.addEventListener('click', () => closeNotification(id));
+
+            const progressBar = document.createElement('div');
+            progressBar.className = 'progress-bar';
+
+            notif.appendChild(iconSpan);
+            notif.appendChild(contentDiv);
+            notif.appendChild(closeBtn);
+            notif.appendChild(progressBar);
 
             container.appendChild(notif);
 
-            setTimeout(() => {
-                notif.classList.add('show');
-            }, 50);
+            setTimeout(() => notif.classList.add('show'), 50);
 
-            const timer = setTimeout(() => {
-                closeNotification(id);
-            }, duration);
-
+            const timer = setTimeout(() => closeNotification(id), duration);
             notif.dataset.timer = timer;
 
             return id;
@@ -633,60 +412,17 @@
         function closeNotification(id) {
             const notif = document.getElementById(`notif-${id}`);
             if (!notif) return;
-            if (notif.dataset.timer) {
-                clearTimeout(notif.dataset.timer);
-            }
+            if (notif.dataset.timer) clearTimeout(notif.dataset.timer);
             notif.classList.remove('show');
             notif.classList.add('hide');
-            setTimeout(() => {
-                if (notif.parentNode) {
-                    notif.remove();
-                }
-            }, 500);
+            setTimeout(() => { if (notif.parentNode) notif.remove(); }, 500);
         }
 
-        function checkCredentials(login, password) {
-            return new Promise((resolve, reject) => {
-                fetch('dast.txt')
-                    .then(response => {
-                        if (!response.ok) {
-                            reject('Файл dast.txt не найден');
-                            return;
-                        }
-                        return response.text();
-                    })
-                    .then(data => {
-                        if (!data) {
-                            reject('Файл пуст');
-                            return;
-                        }
-                        const lines = data.split('\n');
-                        let found = false;
-                        for (let line of lines) {
-                            line = line.trim();
-                            if (line === '') continue;
-                            const parts = line.split(/\s+/);
-                            if (parts.length >= 2) {
-                                const fileLogin = parts[0];
-                                const filePassword = parts.slice(1).join(' ');
-                                if (fileLogin === login && filePassword === password) {
-                                    found = true;
-                                    break;
-                                }
-                            }
-                        }
-                        resolve(found);
-                    })
-                    .catch(error => {
-                        reject(error);
-                    });
-            });
-        }
-
-        loginForm.addEventListener('submit', function(e) {
+        // Обработчик формы
+        loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const login = loginInput.value.trim();
-            const password = passwordInput.value.trim();
+            const password = passwordInput.value;
 
             if (!login || !password) {
                 showNotification('⚠️', 'Ошибка', 'Заполните все поля', 'error', 3500);
@@ -696,135 +432,105 @@
             loginBtn.disabled = true;
             loginBtn.innerHTML = '<span>⏳ Проверка...</span>';
 
-            checkCredentials(login, password)
-                .then(found => {
-                    if (found) {
-                        showNotification('✅', 'Успешно!', 'Добро пожаловать, ' + login + '!', 'success', 3000);
-                        loginBtn.innerHTML = '<span>✅ Успешно!</span>';
-                        setTimeout(() => {
-                            window.location.href = 'lau.html';
-                        }, 1000);
-                    } else {
-                        showNotification('❌', 'Ошибка входа', 'Неверный логин или пароль', 'error', 4000);
-                        loginBtn.disabled = false;
-                        loginBtn.innerHTML = '<span>Войти</span><svg class="w-5 h-5 relative z-10" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>';
-                        loginInput.value = '';
-                        passwordInput.value = '';
-                        loginInput.focus();
-                    }
-                })
-                .catch(error => {
-                    showNotification('❌', 'Ошибка', error, 'error', 4000);
+            try {
+                const response = await fetch('login.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: login, password: password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    showNotification('✅', 'Успешно!', 'Добро пожаловать!', 'success', 3000);
+                    loginBtn.innerHTML = '<span>✅ Успешно!</span>';
+                    setTimeout(() => {
+                        window.location.href = 'lau.html'; // замени на свою защищённую страницу
+                    }, 1000);
+                } else {
+                    // Всегда одинаковый ответ, чтобы враг не понял, что не так
+                    showNotification('❌', 'Ошибка входа', 'Неверный логин или пароль', 'error', 4000);
                     loginBtn.disabled = false;
                     loginBtn.innerHTML = '<span>Войти</span><svg class="w-5 h-5 relative z-10" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>';
-                });
-        });
-
-        loginInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                passwordInput.focus();
+                    loginInput.value = '';
+                    passwordInput.value = '';
+                    loginInput.focus();
+                }
+            } catch (error) {
+                showNotification('❌', 'Ошибка', 'Сервер недоступен. Попробуйте позже.', 'error', 4000);
+                loginBtn.disabled = false;
+                loginBtn.innerHTML = '<span>Войти</span><svg class="w-5 h-5 relative z-10" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>';
             }
         });
 
-        passwordInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                loginForm.dispatchEvent(new Event('submit'));
-            }
-        });
+        // Удобство: Enter переводит фокус
+        loginInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') passwordInput.focus(); });
+        passwordInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') loginForm.dispatchEvent(new Event('submit')); });
 
-        // Particles Canvas
+        // Частицы и падающие блоки (без изменений)
         (function initParticles() {
             const canvas = document.getElementById('particles-canvas');
             const ctx = canvas.getContext('2d');
-            let width, height;
-            let particles = [];
+            let width, height, particles = [];
             const PARTICLE_COUNT = 80;
-
             function resize() {
-                width = window.innerWidth;
-                height = window.innerHeight;
-                canvas.width = width;
-                canvas.height = height;
+                width = window.innerWidth; height = window.innerHeight;
+                canvas.width = width; canvas.height = height;
             }
             window.addEventListener('resize', resize);
             resize();
 
             class Particle {
                 constructor() {
-                    this.x = Math.random() * width;
-                    this.y = Math.random() * height;
-                    this.size = Math.random() * 2 + 0.5;
-                    this.speedX = (Math.random() - 0.5) * 0.3;
-                    this.speedY = (Math.random() - 0.5) * 0.3;
-                    this.opacity = Math.random() * 0.5 + 0.2;
+                    this.x = Math.random()*width; this.y = Math.random()*height;
+                    this.size = Math.random()*2+0.5; this.speedX = (Math.random()-0.5)*0.3;
+                    this.speedY = (Math.random()-0.5)*0.3; this.opacity = Math.random()*0.5+0.2;
                 }
                 update() {
-                    this.x += this.speedX;
-                    this.y += this.speedY;
-                    if (this.x < 0 || this.x > width) this.speedX *= -1;
-                    if (this.y < 0 || this.y > height) this.speedY *= -1;
+                    this.x += this.speedX; this.y += this.speedY;
+                    if (this.x<0||this.x>width) this.speedX *= -1;
+                    if (this.y<0||this.y>height) this.speedY *= -1;
                 }
                 draw() {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(167, 139, 250, ${this.opacity})`;
-                    ctx.fill();
-                    ctx.shadowColor = 'rgba(124, 58, 237, 0.2)';
-                    ctx.shadowBlur = 6;
-                    ctx.fill();
-                    ctx.shadowBlur = 0;
+                    ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
+                    ctx.fillStyle = `rgba(167,139,250,${this.opacity})`; ctx.fill();
+                    ctx.shadowColor = 'rgba(124,58,237,0.2)'; ctx.shadowBlur = 6; ctx.fill(); ctx.shadowBlur = 0;
                 }
             }
-
-            for (let i = 0; i < PARTICLE_COUNT; i++) {
-                particles.push(new Particle());
-            }
-
-            function animateParticles() {
-                ctx.clearRect(0, 0, width, height);
-                particles.forEach(p => {
-                    p.update();
-                    p.draw();
-                });
-                for (let i = 0; i < particles.length; i++) {
-                    for (let j = i + 1; j < particles.length; j++) {
-                        const dx = particles[i].x - particles[j].x;
-                        const dy = particles[i].y - particles[j].y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 140) {
-                            ctx.beginPath();
-                            ctx.moveTo(particles[i].x, particles[i].y);
-                            ctx.lineTo(particles[j].x, particles[j].y);
-                            ctx.strokeStyle = `rgba(167, 139, 250, ${0.06 * (1 - dist / 140)})`;
-                            ctx.lineWidth = 0.5;
-                            ctx.stroke();
+            for (let i=0;i<PARTICLE_COUNT;i++) particles.push(new Particle());
+            function animate() {
+                ctx.clearRect(0,0,width,height);
+                particles.forEach(p=>{ p.update(); p.draw(); });
+                for (let i=0;i<particles.length;i++) {
+                    for (let j=i+1;j<particles.length;j++) {
+                        const dx=particles[i].x-particles[j].x, dy=particles[i].y-particles[j].y;
+                        const dist = Math.sqrt(dx*dx+dy*dy);
+                        if(dist<140) {
+                            ctx.beginPath(); ctx.moveTo(particles[i].x,particles[i].y); ctx.lineTo(particles[j].x,particles[j].y);
+                            ctx.strokeStyle = `rgba(167,139,250,${0.06*(1-dist/140)})`; ctx.lineWidth=0.5; ctx.stroke();
                         }
                     }
                 }
-                requestAnimationFrame(animateParticles);
+                requestAnimationFrame(animate);
             }
-            animateParticles();
+            animate();
         })();
 
-        // Falling Blocks
         (function initFallingBlocks() {
             const container = document.getElementById('fallingBlocks');
-            const blockCount = 25;
-            const icons = ['⛏️', '⚔️', '💎', '🛡️', '🚀', '✨'];
-            for (let i = 0; i < blockCount; i++) {
+            const icons = ['⛏️','⚔️','💎','🛡️','🚀','✨'];
+            for(let i=0;i<25;i++) {
                 const block = document.createElement('div');
                 block.className = 'falling-block';
-                block.textContent = icons[Math.floor(Math.random() * icons.length)];
-                block.style.left = Math.random() * 100 + '%';
-                block.style.animationDuration = (Math.random() * 8 + 6) + 's';
-                block.style.animationDelay = (Math.random() * 10) + 's';
-                block.style.width = (Math.random() * 20 + 20) + 'px';
-                block.style.height = block.style.width;
-                block.style.fontSize = (parseInt(block.style.width) * 0.6) + 'px';
+                block.textContent = icons[Math.floor(Math.random()*icons.length)];
+                block.style.left = Math.random()*100+'%';
+                block.style.animationDuration = (Math.random()*8+6)+'s';
+                block.style.animationDelay = (Math.random()*10)+'s';
+                const s = Math.random()*20+20; block.style.width = s+'px'; block.style.height = s+'px';
+                block.style.fontSize = (s*0.6)+'px';
                 container.appendChild(block);
             }
         })();
     </script>
-
 </body>
 </html>
