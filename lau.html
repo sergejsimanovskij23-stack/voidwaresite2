@@ -253,6 +253,21 @@
             }
         }
 
+        .logo-img {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 2px solid rgba(124, 58, 237, 0.3);
+            box-shadow: 0 0 30px rgba(124, 58, 237, 0.15);
+            transition: all 0.3s ease;
+        }
+        .logo-img:hover {
+            transform: scale(1.05);
+            border-color: rgba(124, 58, 237, 0.6);
+            box-shadow: 0 0 50px rgba(124, 58, 237, 0.25);
+        }
+
         .falling-blocks-container {
             position: fixed;
             top: 0;
@@ -476,6 +491,22 @@
             gap: 0.9rem;
         }
 
+        .online-change {
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .online-change.up {
+            color: #4ade80;
+        }
+        .online-change.down {
+            color: #f87171;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
         @media (max-width: 768px) {
             .bg-main {
                 padding: 1rem;
@@ -493,6 +524,10 @@
             }
             .version-list {
                 gap: 0.7rem;
+            }
+            .logo-img {
+                width: 38px;
+                height: 38px;
             }
         }
     </style>
@@ -515,8 +550,8 @@
         <div class="content max-w-6xl mx-auto">
 
             <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-8">
-                <div class="flex items-center gap-4">
-                    <div class="text-4xl float-3d">🎮</div>
+                <div class="header-logo">
+                    <img src="icon.png" alt="VoidWare" class="logo-img float-3d" />
                     <div>
                         <h1 class="text-3xl md:text-4xl font-black tracking-tight glow-text">
                             <span class="gradient-text">VoidWare</span> Launcher
@@ -543,7 +578,7 @@
                         <h2 class="text-xl font-bold mb-4 glow-text">📦 Выберите версию</h2>
 
                         <div class="version-list" id="versionList">
-                            <div class="version-card selected" data-version="1.21.11" data-type="stable" data-users="30" data-rating="4.9">
+                            <div class="version-card selected" data-version="1.21.11" data-type="stable" data-rating="4.9">
                                 <div class="flex items-center gap-3">
                                     <span>🚀</span>
                                     <div>
@@ -554,11 +589,11 @@
                                 <span class="badge badge-stable">Стабильная</span>
                                 <div class="flex items-center gap-2">
                                     <span class="status-dot online version-status" id="versionStatus1"></span>
-                                    <span class="text-white/40 text-xs version-users" id="versionUsers1">30</span>
+                                    <span class="text-white/40 text-xs version-users online-change" id="versionUsers1">0</span>
                                 </div>
                             </div>
 
-                            <div class="version-card" data-version="1.16.5 Alpha" data-type="alpha" data-users="15" data-rating="4.7">
+                            <div class="version-card" data-version="1.16.5 Alpha" data-type="alpha" data-rating="4.7">
                                 <div class="flex items-center gap-3">
                                     <span>⚔️</span>
                                     <div>
@@ -569,11 +604,11 @@
                                 <span class="badge badge-alpha">Alpha</span>
                                 <div class="flex items-center gap-2">
                                     <span class="status-dot online version-status" id="versionStatus2"></span>
-                                    <span class="text-white/40 text-xs version-users" id="versionUsers2">15</span>
+                                    <span class="text-white/40 text-xs version-users online-change" id="versionUsers2">0</span>
                                 </div>
                             </div>
 
-                            <div class="version-card" data-version="1.16.5 Free" data-type="free" data-users="10" data-rating="4.5">
+                            <div class="version-card" data-version="1.16.5 Free" data-type="free" data-rating="4.5">
                                 <div class="flex items-center gap-3">
                                     <span>🎯</span>
                                     <div>
@@ -584,7 +619,7 @@
                                 <span class="badge badge-free">Free</span>
                                 <div class="flex items-center gap-2">
                                     <span class="status-dot online version-status" id="versionStatus3"></span>
-                                    <span class="text-white/40 text-xs version-users" id="versionUsers3">10</span>
+                                    <span class="text-white/40 text-xs version-users online-change" id="versionUsers3">0</span>
                                 </div>
                             </div>
                         </div>
@@ -600,7 +635,7 @@
                             <span>•</span>
                             <span>🔄 Последнее обновление: сегодня</span>
                             <span>•</span>
-                            <span id="onlineCountDisplay">👥 55 онлайн</span>
+                            <span id="onlineCountDisplay">👥 <span id="totalOnline">0</span> онлайн</span>
                         </div>
                     </div>
                 </div>
@@ -620,7 +655,7 @@
                             </div>
                             <div class="flex justify-between items-center border-b border-white/5 pb-2">
                                 <span class="text-white/40 text-sm">Пользователей</span>
-                                <span class="text-white/60 info-value show" id="selectedUsersDisplay">30</span>
+                                <span class="text-white/60 info-value show" id="selectedUsersDisplay">0</span>
                             </div>
                             <div class="flex justify-between items-center border-b border-white/5 pb-2">
                                 <span class="text-white/40 text-sm">Рейтинг</span>
@@ -711,6 +746,84 @@
         }
 
         // ============================================
+        // ДИНАМИЧЕСКИЙ ОНЛАЙН
+        // ============================================
+
+        const versionUsersElements = [
+            document.getElementById('versionUsers1'),
+            document.getElementById('versionUsers2'),
+            document.getElementById('versionUsers3')
+        ];
+        const totalOnlineEl = document.getElementById('totalOnline');
+        const selectedUsersDisplay = document.getElementById('selectedUsersDisplay');
+
+        const userRanges = [
+            { min: 12, max: 45, current: 30 },
+            { min: 5, max: 25, current: 15 },
+            { min: 3, max: 18, current: 10 }
+        ];
+
+        let versionUsers = [30, 15, 10];
+        let totalOnline = 55;
+        let isOnline = true;
+        let lastStatus = null;
+        let firstLoad = true;
+
+        function getRandomInRange(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function updateOnlineCounts(showEffect = true) {
+            if (!isOnline) {
+                versionUsers = [0, 0, 0];
+                totalOnline = 0;
+            } else {
+                versionUsers = versionUsers.map((val, index) => {
+                    const range = userRanges[index];
+                    let newVal = val + getRandomInRange(-2, 2);
+                    newVal = Math.max(range.min, Math.min(range.max, newVal));
+                    return newVal;
+                });
+                totalOnline = versionUsers.reduce((a, b) => a + b, 0);
+            }
+
+            versionUsersElements.forEach((el, index) => {
+                const oldVal = parseInt(el.textContent) || 0;
+                const newVal = versionUsers[index];
+                el.textContent = newVal;
+                if (showEffect && isOnline) {
+                    el.className = 'text-white/40 text-xs version-users online-change';
+                    if (newVal > oldVal) el.classList.add('up');
+                    else if (newVal < oldVal) el.classList.add('down');
+                    setTimeout(() => {
+                        el.className = 'text-white/40 text-xs version-users online-change';
+                    }, 800);
+                }
+            });
+
+            if (totalOnlineEl) {
+                const oldTotal = parseInt(totalOnlineEl.textContent) || 0;
+                totalOnlineEl.textContent = totalOnline;
+                if (showEffect && isOnline) {
+                    totalOnlineEl.className = 'online-change';
+                    if (totalOnline > oldTotal) totalOnlineEl.classList.add('up');
+                    else if (totalOnline < oldTotal) totalOnlineEl.classList.add('down');
+                    setTimeout(() => {
+                        totalOnlineEl.className = '';
+                    }, 800);
+                }
+            }
+
+            const selectedCard = document.querySelector('.version-card.selected');
+            if (selectedCard) {
+                const index = Array.from(document.querySelectorAll('.version-card')).indexOf(selectedCard);
+                if (index !== -1 && index < versionUsers.length) {
+                    selectedUsersDisplay.textContent = versionUsers[index];
+                }
+            }
+        }
+
+        // ============================================
         // ОСНОВНАЯ ЛОГИКА
         // ============================================
 
@@ -721,35 +834,23 @@
         const container = document.getElementById('notificationContainer');
         const selectedVersionDisplay = document.getElementById('selectedVersionDisplay');
         const selectedTypeDisplay = document.getElementById('selectedTypeDisplay');
-        const selectedUsersDisplay = document.getElementById('selectedUsersDisplay');
         const selectedRatingDisplay = document.getElementById('selectedRatingDisplay');
         const statusDot = document.getElementById('statusDot');
         const statusText = document.getElementById('statusText');
         const statusReady = document.getElementById('statusReady');
         const infoStatusDot = document.getElementById('infoStatusDot');
         const infoStatusText = document.getElementById('infoStatusText');
-        const onlineCountDisplay = document.getElementById('onlineCountDisplay');
         const loadingOverlay = document.getElementById('loadingOverlay');
 
         let selectedVersion = '1.21.11';
         let selectedType = 'stable';
-        let selectedUsers = '30';
         let selectedRating = '4.9';
-        let isOnline = true;
-        let lastStatus = null;
-        let firstLoad = true;
 
         const versionStatuses = [
             document.getElementById('versionStatus1'),
             document.getElementById('versionStatus2'),
             document.getElementById('versionStatus3')
         ];
-        const versionUsersElements = [
-            document.getElementById('versionUsers1'),
-            document.getElementById('versionUsers2'),
-            document.getElementById('versionUsers3')
-        ];
-        const baseUsers = [30, 15, 10];
 
         function showNotification(icon, title, text, type = 'info', duration = 4000) {
             const id = Date.now();
@@ -804,8 +905,8 @@
                 infoStatusDot.className = 'status-dot online';
                 infoStatusText.textContent = 'Онлайн';
                 infoStatusText.className = 'text-green-400';
-                onlineCountDisplay.textContent = '👥 55 онлайн';
                 launchBtn.disabled = false;
+                updateOnlineCounts(true);
             } else {
                 statusDot.className = 'status-dot offline';
                 statusText.textContent = 'Офлайн';
@@ -813,28 +914,15 @@
                 infoStatusDot.className = 'status-dot offline';
                 infoStatusText.textContent = 'Офлайн';
                 infoStatusText.className = 'text-red-400';
-                onlineCountDisplay.textContent = '👥 0 онлайн';
                 launchBtn.disabled = true;
+                versionUsers = [0, 0, 0];
+                totalOnline = 0;
+                updateOnlineCounts(false);
             }
 
-            versionCards.forEach((card, index) => {
-                const statusDotVersion = versionStatuses[index];
-                const usersElement = versionUsersElements[index];
-                if (isOnline) {
-                    statusDotVersion.className = 'status-dot online';
-                    const users = card.dataset.users || baseUsers[index];
-                    usersElement.textContent = users;
-                } else {
-                    statusDotVersion.className = 'status-dot offline';
-                    usersElement.textContent = '0';
-                }
+            versionStatuses.forEach((dot, index) => {
+                dot.className = isOnline ? 'status-dot online' : 'status-dot offline';
             });
-
-            const currentCard = document.querySelector('.version-card.selected');
-            if (currentCard) {
-                const users = currentCard.dataset.users;
-                updateInfoDisplay(selectedUsersDisplay, isOnline ? users : '0', false);
-            }
 
             if (showNotif && lastStatus !== null) {
                 showNotification(isOnline ? '🟢' : '🔴', isOnline ? 'Сервер онлайн' : 'Сервер офлайн', isOnline ? 'Сервер успешно подключен!' : 'Сервера выключены', isOnline ? 'success' : 'error', 3000);
@@ -847,6 +935,18 @@
             lastStatus = status;
             updateUI(status, true);
             loadingOverlay.classList.add('hidden');
+            startOnlineUpdates();
+        }
+
+        let onlineInterval = null;
+
+        function startOnlineUpdates() {
+            if (onlineInterval) clearInterval(onlineInterval);
+            onlineInterval = setInterval(() => {
+                if (isOnline) {
+                    updateOnlineCounts(true);
+                }
+            }, 3000 + Math.random() * 2000);
         }
 
         async function autoRefreshStatus() {
@@ -883,25 +983,29 @@
             }, 300);
         }
 
-        versionCards.forEach((card) => {
+        versionCards.forEach((card, index) => {
             card.addEventListener('click', function() {
                 versionCards.forEach(c => c.classList.remove('selected'));
                 this.classList.add('selected');
 
                 const newVersion = this.dataset.version;
                 const newType = this.dataset.type;
-                const newUsers = this.dataset.users || '0';
                 const newRating = this.dataset.rating || '0';
 
                 selectedVersion = newVersion;
                 selectedType = newType;
-                selectedUsers = newUsers;
                 selectedRating = newRating;
 
                 updateInfoDisplay(selectedVersionDisplay, selectedVersion, false);
                 const typeLabels = { 'alpha': 'Alpha', 'stable': 'Стабильная', 'free': 'Free' };
                 updateInfoDisplay(selectedTypeDisplay, typeLabels[selectedType] || selectedType, true);
-                updateInfoDisplay(selectedUsersDisplay, isOnline ? selectedUsers : '0', false);
+
+                if (isOnline && index < versionUsers.length) {
+                    selectedUsersDisplay.textContent = versionUsers[index];
+                } else {
+                    selectedUsersDisplay.textContent = '0';
+                }
+
                 const stars = '★'.repeat(Math.round(parseFloat(newRating))) + '☆'.repeat(5 - Math.round(parseFloat(newRating)));
                 updateInfoDisplay(selectedRatingDisplay, `${stars} ${newRating}`, false);
             });
@@ -937,6 +1041,7 @@
             }, 3000);
         });
 
+        // Particles
         (function initParticles() {
             const canvas = document.getElementById('particles-canvas');
             const ctx = canvas.getContext('2d');
@@ -1000,6 +1105,7 @@
             animate();
         })();
 
+        // Falling blocks
         (function initFallingBlocks() {
             const container = document.getElementById('fallingBlocks');
             const icons = ['⛏️', '⚔️', '💎', '🛡️', '🚀', '✨'];
@@ -1018,7 +1124,7 @@
         })();
 
         loadStatus();
-        setInterval(autoRefreshStatus, 4000);
+        setInterval(autoRefreshStatus, 10000);
     </script>
 
 </body>
