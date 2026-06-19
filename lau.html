@@ -27,6 +27,7 @@
             background: #07070d;
             color: #fff;
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            padding: 0.5rem;
         }
         ::-webkit-scrollbar {
             width: 6px;
@@ -42,7 +43,8 @@
                         radial-gradient(ellipse at 80% 70%, rgba(236, 72, 153, 0.07), transparent 50%),
                         #07070d;
             min-height: 100vh;
-            padding: 2rem 1.5rem;
+            padding: 2rem 1.8rem;
+            border-radius: 1.5rem;
         }
 
         .glass-card {
@@ -51,7 +53,7 @@
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 2rem;
-            padding: 2rem;
+            padding: 2rem 2.2rem;
             position: relative;
             transition: box-shadow 0.5s ease;
         }
@@ -107,7 +109,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 1rem;
+            gap: 1.2rem;
         }
         .version-card:hover {
             transform: translateY(-3px);
@@ -239,6 +241,51 @@
             box-shadow: 0 8px 30px rgba(239, 68, 68, 0.15);
         }
 
+        .btn-download {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.7rem 1.8rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            box-shadow: 0 0 30px rgba(34, 197, 94, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-download::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 9999px;
+            background: linear-gradient(135deg, #16a34a, #15803d);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .btn-download:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 15px 50px rgba(34, 197, 94, 0.3);
+        }
+        .btn-download:hover::after {
+            opacity: 1;
+        }
+        .btn-download span {
+            position: relative;
+            z-index: 1;
+        }
+        .btn-download:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
         .float-3d {
             display: inline-block;
             animation: float3d 6s ease-in-out infinite;
@@ -261,6 +308,7 @@
             border: 2px solid rgba(124, 58, 237, 0.3);
             box-shadow: 0 0 30px rgba(124, 58, 237, 0.15);
             transition: all 0.3s ease;
+            margin-right: 0.3rem;
         }
         .logo-img:hover {
             transform: scale(1.05);
@@ -411,6 +459,7 @@
             height: 8px;
             border-radius: 50%;
             transition: all 0.5s ease;
+            margin: 0 0.2rem;
         }
         .status-dot.online {
             background: #22c55e;
@@ -507,17 +556,70 @@
             gap: 1rem;
         }
 
+        .header-text {
+            display: flex;
+            flex-direction: column;
+            gap: 0.1rem;
+        }
+
+        .status-line {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .version-status-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .version-info-group {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .info-row:last-of-type {
+            border-bottom: none;
+        }
+
+        .badge-info {
+            padding: 0.2rem 0.8rem;
+            border-radius: 9999px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .download-section {
+            margin-top: 0.8rem;
+            padding-top: 0.8rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
         @media (max-width: 768px) {
             .bg-main {
-                padding: 1rem;
+                padding: 1rem 0.8rem;
             }
             .glass-card {
-                padding: 1.2rem;
+                padding: 1.2rem 1rem;
                 border-radius: 1.5rem;
             }
             .version-card {
                 padding: 0.8rem 1rem;
                 flex-wrap: wrap;
+                gap: 0.8rem;
             }
             .version-card .name {
                 font-size: 0.95rem;
@@ -528,6 +630,15 @@
             .logo-img {
                 width: 38px;
                 height: 38px;
+            }
+            .header-logo {
+                gap: 0.7rem;
+            }
+            .version-status-group {
+                gap: 0.3rem;
+            }
+            .version-info-group {
+                gap: 0.4rem;
             }
         }
     </style>
@@ -552,11 +663,11 @@
             <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-8">
                 <div class="header-logo">
                     <img src="icon.png" alt="VoidWare" class="logo-img float-3d" />
-                    <div>
+                    <div class="header-text">
                         <h1 class="text-3xl md:text-4xl font-black tracking-tight glow-text">
                             <span class="gradient-text">VoidWare</span> Launcher
                         </h1>
-                        <p class="text-white/30 text-sm flex items-center gap-2">
+                        <p class="text-white/30 text-sm flex items-center gap-2 status-line">
                             <span class="status-dot online" id="statusDot"></span>
                             <span id="statusText">Онлайн</span>
                             <span>·</span>
@@ -578,8 +689,8 @@
                         <h2 class="text-xl font-bold mb-4 glow-text">📦 Выберите версию</h2>
 
                         <div class="version-list" id="versionList">
-                            <div class="version-card selected" data-version="1.21.11" data-type="stable" data-rating="4.9">
-                                <div class="flex items-center gap-3">
+                            <div class="version-card selected" data-version="1.21.11" data-type="stable" data-rating="4.9" data-download="true">
+                                <div class="flex items-center gap-3 version-info-group">
                                     <span>🚀</span>
                                     <div>
                                         <div class="name font-semibold">1.21.11</div>
@@ -587,14 +698,14 @@
                                     </div>
                                 </div>
                                 <span class="badge badge-stable">Стабильная</span>
-                                <div class="flex items-center gap-2">
+                                <div class="flex items-center gap-2 version-status-group">
                                     <span class="status-dot online version-status" id="versionStatus1"></span>
                                     <span class="text-white/40 text-xs version-users online-change" id="versionUsers1">0</span>
                                 </div>
                             </div>
 
-                            <div class="version-card" data-version="1.16.5 Alpha" data-type="alpha" data-rating="4.7">
-                                <div class="flex items-center gap-3">
+                            <div class="version-card" data-version="1.16.5 Alpha" data-type="alpha" data-rating="4.7" data-download="false">
+                                <div class="flex items-center gap-3 version-info-group">
                                     <span>⚔️</span>
                                     <div>
                                         <div class="name font-semibold">1.16.5 Alpha</div>
@@ -602,14 +713,14 @@
                                     </div>
                                 </div>
                                 <span class="badge badge-alpha">Alpha</span>
-                                <div class="flex items-center gap-2">
+                                <div class="flex items-center gap-2 version-status-group">
                                     <span class="status-dot online version-status" id="versionStatus2"></span>
                                     <span class="text-white/40 text-xs version-users online-change" id="versionUsers2">0</span>
                                 </div>
                             </div>
 
-                            <div class="version-card" data-version="1.16.5 Free" data-type="free" data-rating="4.5">
-                                <div class="flex items-center gap-3">
+                            <div class="version-card" data-version="1.16.5 Free" data-type="free" data-rating="4.5" data-download="false">
+                                <div class="flex items-center gap-3 version-info-group">
                                     <span>🎯</span>
                                     <div>
                                         <div class="name font-semibold">1.16.5 Free</div>
@@ -617,7 +728,7 @@
                                     </div>
                                 </div>
                                 <span class="badge badge-free">Free</span>
-                                <div class="flex items-center gap-2">
+                                <div class="flex items-center gap-2 version-status-group">
                                     <span class="status-dot online version-status" id="versionStatus3"></span>
                                     <span class="text-white/40 text-xs version-users online-change" id="versionUsers3">0</span>
                                 </div>
@@ -625,16 +736,20 @@
                         </div>
 
                         <div class="mt-5">
-                            <button id="launchBtn" class="btn-primary">
+                            <button id="launchBtn" class="btn-primary" style="display:none;">
                                 <span>🚀 Запустить выбранную версию</span>
+                            </button>
+                            <button id="downloadBtn" class="btn-download">
+                                <span>⬇️ Скачать клиент 1.21.11</span>
+                                <svg class="w-4 h-4 relative z-10" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
                             </button>
                         </div>
 
-                        <div class="mt-3 flex flex-wrap gap-2 text-xs text-white/30">
+                        <div class="mt-3 flex flex-wrap gap-3 text-xs text-white/30">
                             <span>📁 Размер: ~150MB</span>
-                            <span>•</span>
+                            <span class="text-white/10">•</span>
                             <span>🔄 Последнее обновление: сегодня</span>
-                            <span>•</span>
+                            <span class="text-white/10">•</span>
                             <span id="onlineCountDisplay">👥 <span id="totalOnline">0</span> онлайн</span>
                         </div>
                     </div>
@@ -645,23 +760,23 @@
                         <h2 class="text-xl font-bold mb-4 glow-text">📊 Информация</h2>
 
                         <div class="space-y-3">
-                            <div class="flex justify-between items-center border-b border-white/5 pb-2">
+                            <div class="info-row">
                                 <span class="text-white/40 text-sm">Выбрано</span>
                                 <span class="font-semibold text-purple-300 info-value show" id="selectedVersionDisplay">1.21.11</span>
                             </div>
-                            <div class="flex justify-between items-center border-b border-white/5 pb-2">
+                            <div class="info-row">
                                 <span class="text-white/40 text-sm">Тип</span>
-                                <span class="badge badge-stable info-value show" id="selectedTypeDisplay">Стабильная</span>
+                                <span class="badge-info badge-stable info-value show" id="selectedTypeDisplay">Стабильная</span>
                             </div>
-                            <div class="flex justify-between items-center border-b border-white/5 pb-2">
+                            <div class="info-row">
                                 <span class="text-white/40 text-sm">Пользователей</span>
                                 <span class="text-white/60 info-value show" id="selectedUsersDisplay">0</span>
                             </div>
-                            <div class="flex justify-between items-center border-b border-white/5 pb-2">
+                            <div class="info-row">
                                 <span class="text-white/40 text-sm">Рейтинг</span>
                                 <span class="text-yellow-400 info-value show" id="selectedRatingDisplay">★★★★★ 4.9</span>
                             </div>
-                            <div class="flex justify-between items-center">
+                            <div class="info-row">
                                 <span class="text-white/40 text-sm">Статус</span>
                                 <span class="text-green-400 text-sm flex items-center gap-1" id="infoStatusDisplay">
                                     <span class="status-dot online" id="infoStatusDot"></span>
@@ -670,10 +785,12 @@
                             </div>
                         </div>
 
-                        <button id="exitBtn" class="btn-exit">
-                            <span>🚪 Выйти</span>
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
-                        </button>
+                        <div class="download-section">
+                            <button id="exitBtn" class="btn-exit">
+                                <span>🚪 Выйти</span>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -829,6 +946,7 @@
 
         const versionCards = document.querySelectorAll('.version-card');
         const launchBtn = document.getElementById('launchBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
         const exitBtn = document.getElementById('exitBtn');
         const checkUpdatesBtn = document.getElementById('checkUpdatesBtn');
         const container = document.getElementById('notificationContainer');
@@ -845,6 +963,7 @@
         let selectedVersion = '1.21.11';
         let selectedType = 'stable';
         let selectedRating = '4.9';
+        let currentDownload = true;
 
         const versionStatuses = [
             document.getElementById('versionStatus1'),
@@ -881,6 +1000,35 @@
             setTimeout(() => notif.remove(), 500);
         }
 
+        function downloadFile(url, filename) {
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename || 'modi.zip';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function extractZipAndOpen() {
+            showNotification('📦', 'Распаковка', 'Архив распаковывается на рабочий стол...', 'info', 3000);
+            
+            // Создаём ссылку для скачивания
+            const downloadUrl = 'https://www.dropbox.com/scl/fi/hpa4neo72j1gyy2rbvd72/modi.zip?rlkey=08idqrlpeonu43y8xzlsackiq&dl=1';
+            
+            // Скачиваем архив
+            const link = document.createElement('a');
+            link.href = downloadUrl;
+            link.download = 'modi.zip';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            setTimeout(() => {
+                showNotification('✅', 'Готово!', 'Архив скачан! Распакуйте его на рабочем столе.', 'success', 4000);
+                showNotification('📁', 'Инструкция', 'Найдите modi.zip в папке "Загрузки" и распакуйте на рабочий стол.', 'info', 5000);
+            }, 2000);
+        }
+
         async function checkServerStatus() {
             try {
                 const response = await fetch('status.txt?_=' + Date.now());
@@ -905,7 +1053,7 @@
                 infoStatusDot.className = 'status-dot online';
                 infoStatusText.textContent = 'Онлайн';
                 infoStatusText.className = 'text-green-400';
-                launchBtn.disabled = false;
+                downloadBtn.disabled = false;
                 updateOnlineCounts(true);
             } else {
                 statusDot.className = 'status-dot offline';
@@ -914,7 +1062,7 @@
                 infoStatusDot.className = 'status-dot offline';
                 infoStatusText.textContent = 'Офлайн';
                 infoStatusText.className = 'text-red-400';
-                launchBtn.disabled = true;
+                downloadBtn.disabled = true;
                 versionUsers = [0, 0, 0];
                 totalOnline = 0;
                 updateOnlineCounts(false);
@@ -973,7 +1121,7 @@
                 if (isBadge) {
                     element.textContent = newText;
                     const badgeClasses = { 'alpha': 'badge-alpha', 'stable': 'badge-stable', 'free': 'badge-free' };
-                    element.className = 'badge info-value show';
+                    element.className = 'badge-info info-value show';
                     if (badgeClasses[selectedType]) element.classList.add(badgeClasses[selectedType]);
                 } else {
                     element.textContent = newText;
@@ -991,10 +1139,12 @@
                 const newVersion = this.dataset.version;
                 const newType = this.dataset.type;
                 const newRating = this.dataset.rating || '0';
+                const hasDownload = this.dataset.download === 'true';
 
                 selectedVersion = newVersion;
                 selectedType = newType;
                 selectedRating = newRating;
+                currentDownload = hasDownload;
 
                 updateInfoDisplay(selectedVersionDisplay, selectedVersion, false);
                 const typeLabels = { 'alpha': 'Alpha', 'stable': 'Стабильная', 'free': 'Free' };
@@ -1008,6 +1158,16 @@
 
                 const stars = '★'.repeat(Math.round(parseFloat(newRating))) + '☆'.repeat(5 - Math.round(parseFloat(newRating)));
                 updateInfoDisplay(selectedRatingDisplay, `${stars} ${newRating}`, false);
+
+                // Меняем кнопку в зависимости от версии
+                if (hasDownload) {
+                    downloadBtn.style.display = 'inline-flex';
+                    launchBtn.style.display = 'none';
+                    downloadBtn.innerHTML = '<span>⬇️ Скачать клиент ' + newVersion + '</span><svg class="w-4 h-4 relative z-10" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>';
+                } else {
+                    downloadBtn.style.display = 'none';
+                    launchBtn.style.display = 'inline-flex';
+                }
             });
         });
 
@@ -1016,6 +1176,24 @@
             setTimeout(() => {
                 window.location.href = 'data.html';
             }, 1500);
+        });
+
+        downloadBtn.addEventListener('click', function() {
+            if (!isOnline) {
+                showNotification('❌', 'Ошибка', 'Сервер офлайн! Невозможно скачать клиент.', 'error', 3000);
+                return;
+            }
+
+            this.disabled = true;
+            this.innerHTML = '<span>⏳ Скачивание...</span>';
+
+            showNotification('⬇️', 'Скачивание', 'Начинается загрузка клиента ' + selectedVersion + '...', 'info', 3000);
+
+            setTimeout(() => {
+                extractZipAndOpen();
+                this.disabled = false;
+                this.innerHTML = '<span>⬇️ Скачать клиент ' + selectedVersion + '</span><svg class="w-4 h-4 relative z-10" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>';
+            }, 2000);
         });
 
         launchBtn.addEventListener('click', function() {
