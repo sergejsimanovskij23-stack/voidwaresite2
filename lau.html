@@ -684,6 +684,8 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-3">
+                    <!-- Отображаем логин пользователя -->
+                    <span class="text-white/70 text-sm font-medium" id="userDisplay">Пользователь</span>
                     <button class="btn-secondary" id="checkUpdatesBtn">
                         🔄 Проверить обновления
                     </button>
@@ -768,6 +770,10 @@
                         <h2 class="text-xl font-bold mb-4 glow-text">📊 Информация</h2>
 
                         <div class="space-y-3">
+                            <div class="info-row">
+                                <span class="text-white/40 text-sm">Пользователь</span>
+                                <span class="font-semibold text-purple-300 info-value show" id="userInfoDisplay">—</span>
+                            </div>
                             <div class="info-row">
                                 <span class="text-white/40 text-sm">Выбрано</span>
                                 <span class="font-semibold text-purple-300 info-value show" id="selectedVersionDisplay">1.21.11</span>
@@ -869,6 +875,20 @@
         if (window.top !== window.self) {
             window.top.location = window.self.location;
         }
+
+        // ============================================
+        // ПРОВЕРКА АВТОРИЗАЦИИ
+        // ============================================
+
+        const user = localStorage.getItem('launcher_user');
+        if (!user) {
+            // Если пользователь не авторизован — отправляем на страницу входа
+            window.location.href = 'data.html';
+        }
+
+        // Отображаем логин в двух местах
+        document.getElementById('userDisplay').textContent = '👤 ' + user;
+        document.getElementById('userInfoDisplay').textContent = user;
 
         // ============================================
         // ДИНАМИЧЕСКИЙ ОНЛАЙН
@@ -1195,8 +1215,12 @@
             });
         });
 
+        // ============================================
+        // ВЫХОД — ОЧИЩАЕМ localStorage И ПЕРЕНАПРАВЛЯЕМ
+        // ============================================
         exitBtn.addEventListener('click', function() {
             showNotification('🚪', 'Выход', 'Перенаправление...', 'info', 2000);
+            localStorage.removeItem('launcher_user');
             setTimeout(() => {
                 window.location.href = 'data.html';
             }, 1500);
