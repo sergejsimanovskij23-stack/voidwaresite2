@@ -26,15 +26,26 @@
             color: #fff;
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
             scroll-behavior: smooth;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
         }
         img {
             max-width: 100%;
             height: auto;
             display: block;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            pointer-events: none;
         }
         a {
             text-decoration: none;
             color: inherit;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         /* ── Scrollbar ── */
@@ -94,6 +105,8 @@
             box-shadow: 0 0 0 0 rgba(124, 58, 237, 0);
             position: relative;
             overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
         }
         .btn-primary::after {
             content: '';
@@ -327,6 +340,17 @@
                 font-size: 0.85rem;
             }
         }
+
+        /* Защита от выделения */
+        .no-select {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+        * {
+            -webkit-touch-callout: none;
+        }
     </style>
 </head>
 <body>
@@ -341,11 +365,11 @@
     <div class="content">
 
         <!-- ─── HEADER ─── -->
-        <header id="mainHeader" class="fixed top-0 left-0 right-0 z-50 header-transition bg-[#07070d]/80 backdrop-blur-md border-b border-white/5">
+        <header id="mainHeader" class="fixed top-0 left-0 right-0 z-50 header-transition bg-[#07070d]/80 backdrop-blur-md border-b border-white/5 no-select">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between flex-wrap gap-3">
                 <div class="flex items-center gap-3">
                     <div class="w-11 h-11 rounded-2xl overflow-hidden border border-purple-400/30 shadow-lg shadow-purple-500/10 flex-shrink-0">
-                        <img src="/newicon.jpg" alt="VoidWare logo" class="w-full h-full object-cover" />
+                        <img src="/newicon.jpg" alt="VoidWare logo" class="w-full h-full object-cover" draggable="false" />
                     </div>
                     <div>
                         <h1 class="font-bold text-lg tracking-tight">VoidWare</h1>
@@ -354,13 +378,13 @@
                 </div>
 
                 <nav class="flex flex-wrap items-center gap-2 sm:gap-3">
-                    <a href="index.html" class="px-5 py-2.5 rounded-full glass text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 transition">
+                    <a href="index.html" class="px-5 py-2.5 rounded-full glass text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 transition no-select">
                         Главная
                     </a>
-                    <a href="news.html" class="px-5 py-2.5 rounded-full glass text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 transition">
+                    <a href="news.html" class="px-5 py-2.5 rounded-full glass text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 transition no-select">
                         Новости
                     </a>
-                    <a href="shop.html" class="px-5 py-2.5 rounded-full glass text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 transition">
+                    <a href="shop.html" class="px-5 py-2.5 rounded-full glass text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 transition no-select">
                         Товары
                     </a>
                 </nav>
@@ -371,7 +395,7 @@
         <div class="h-20 sm:h-24"></div>
 
         <!-- ─── HERO ─── -->
-        <section class="relative max-w-4xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12 pb-8 sm:pb-12 reveal">
+        <section class="relative max-w-4xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12 pb-8 sm:pb-12 reveal no-select">
             <div class="text-center">
                 <p class="uppercase tracking-[0.3em] text-purple-400 text-xs sm:text-sm font-semibold mb-3">Помощь</p>
                 <h1 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight">
@@ -477,18 +501,19 @@
         </section>
 
         <!-- ─── FOOTER ─── -->
-        <footer class="border-t border-white/5 bg-[#05050b]">
+        <footer class="border-t border-white/5 bg-[#05050b] no-select">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
                 <div class="flex flex-col md:flex-row items-center justify-between gap-6">
                     <div class="text-center md:text-left">
                         <h3 class="text-2xl sm:text-3xl font-black tracking-tight mb-1">VoidWare</h3>
                         <p class="text-white/30 text-sm">© voidware 2026 — Все права защищены.</p>
+                        <p class="text-white/20 text-xs mt-1">TimofeenTuz Guard</p>
                     </div>
                     <div class="flex flex-wrap justify-center items-center gap-4 sm:gap-6">
-                        <a href="terms-of-service.html" class="text-white/40 hover:text-white/70 transition text-sm">Пользовательское соглашение</a>
-                        <a href="privacy-policy.html" class="text-white/40 hover:text-white/70 transition text-sm">Политика конфиденциальности</a>
-                        <a href="faq.html" class="text-white/40 hover:text-white/70 transition text-sm">FAQ</a>
-                        <a href="https://t.me/VoidWareDlc" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 rounded-full glass text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 transition">
+                        <a href="terms-of-service.html" class="text-white/40 hover:text-white/70 transition text-sm no-select">Пользовательское соглашение</a>
+                        <a href="privacy-policy.html" class="text-white/40 hover:text-white/70 transition text-sm no-select">Политика конфиденциальности</a>
+                        <a href="faq.html" class="text-white/40 hover:text-white/70 transition text-sm no-select">FAQ</a>
+                        <a href="https://t.me/VoidWareDlc" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 rounded-full glass text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 transition no-select">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
                             Telegram
                         </a>
@@ -502,16 +527,88 @@
 
     <!-- ─── SCRIPTS ─── -->
     <script>
+        // ============================================
+        // ЗАЩИТА ОТ ПРОСМОТРА ИСХОДНОГО КОДА
+        // ============================================
+
+        // 1. Блокировка правой кнопки мыши (контекстного меню) - без уведомления
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // 2. Блокировка клавиш для просмотра кода - без уведомлений
+        document.addEventListener('keydown', function(e) {
+            // F12
+            if (e.key === 'F12') {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+            if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+U (просмотр исходного кода)
+            if (e.ctrlKey && e.key === 'u') {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+S (сохранение страницы)
+            if (e.ctrlKey && e.key === 's') {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // 3. Блокировка выделения текста (кроме полей ввода)
+        document.addEventListener('selectstart', function(e) {
+            if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+                e.preventDefault();
+            }
+        });
+
+        // 4. Блокировка перетаскивания
+        document.addEventListener('dragstart', function(e) {
+            e.preventDefault();
+        });
+
+        // 5. Блокировка копирования (кроме полей ввода) - без уведомления
+        document.addEventListener('copy', function(e) {
+            if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+                e.preventDefault();
+            }
+        });
+
+        // 6. Очистка консоли и предотвращение вывода
+        console.log = function() {};
+        console.warn = function() {};
+        console.error = function() {};
+        console.info = function() {};
+        console.debug = function() {};
+        console.clear();
+
+        // 7. Блокировка контекстного меню на изображениях
+        document.querySelectorAll('img').forEach(img => {
+            img.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                return false;
+            });
+        });
+
+        // 8. Защита от iframe
+        if (window.top !== window.self) {
+            window.top.location = window.self.location;
+        }
+
+        // ============================================
+        // ОСНОВНАЯ ЛОГИКА (FAQ)
+        // ============================================
+
         // ── FAQ Accordion ──
         document.querySelectorAll('.faq-item').forEach(item => {
             const question = item.querySelector('.faq-question');
             question.addEventListener('click', () => {
-                // Close other items (optional — можно закомментировать, чтобы открывались все)
-                // document.querySelectorAll('.faq-item').forEach(other => {
-                //     if (other !== item && other.classList.contains('open')) {
-                //         other.classList.remove('open');
-                //     }
-                // });
                 item.classList.toggle('open');
             });
         });
