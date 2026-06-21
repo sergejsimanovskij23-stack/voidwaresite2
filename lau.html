@@ -396,7 +396,7 @@
             transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
             pointer-events: auto;
             position: relative;
-            overflow: hidden; /* ← важно для скругления прогресс-бара */
+            overflow: hidden;
         }
         .notification.show {
             transform: translateX(0);
@@ -437,7 +437,7 @@
             background: linear-gradient(90deg, #7C3AED, #EC4899);
             border-radius: 0 0 1rem 1rem;
             animation: progress 4s linear forwards;
-            width: 100%; /* чтобы не вылазил за скругления */
+            width: 100%;
         }
         .notification.error .progress-bar {
             background: linear-gradient(90deg, #ef4444, #dc2626);
@@ -684,7 +684,6 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-3">
-                    <!-- Отображаем логин пользователя -->
                     <span class="text-white/70 text-sm font-medium" id="userDisplay">Пользователь</span>
                     <button class="btn-secondary" id="checkUpdatesBtn">
                         🔄 Проверить обновления
@@ -882,11 +881,9 @@
 
         const user = localStorage.getItem('launcher_user');
         if (!user) {
-            // Если пользователь не авторизован — отправляем на страницу входа
             window.location.href = 'data.html';
         }
 
-        // Отображаем логин в двух местах
         document.getElementById('userDisplay').textContent = '👤 ' + user;
         document.getElementById('userInfoDisplay').textContent = user;
 
@@ -913,10 +910,6 @@
         let isOnline = true;
         let lastStatus = null;
         let firstLoad = true;
-
-        function getRandomInRange(min, max) {
-            return Math.floor(Math.random() * (max - min + 1)) + min;
-        }
 
         function updateOnlineCounts(showEffect = true) {
             if (!isOnline) {
@@ -966,6 +959,10 @@
                     selectedUsersDisplay.textContent = versionUsers[index];
                 }
             }
+        }
+
+        function getRandomInRange(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
         }
 
         // ============================================
@@ -1067,7 +1064,7 @@
         }
 
         // ============================================
-        // ФУНКЦИИ СТАТУСА СЕРВЕРА
+        // ФУНКЦИИ СТАТУСА СЕРВЕРА (исправлено)
         // ============================================
 
         async function checkServerStatus() {
@@ -1082,10 +1079,8 @@
         }
 
         function updateUI(status, showNotif = false) {
-            if (status === lastStatus && !firstLoad) return;
             isOnline = status;
             lastStatus = status;
-            firstLoad = false;
 
             if (isOnline) {
                 statusDot.className = 'status-dot online';
@@ -1109,52 +1104,51 @@
                 updateOnlineCounts(false);
             }
 
-            versionStatuses.forEach((dot, index) => {
+            versionStatuses.forEach((dot) => {
                 dot.className = isOnline ? 'status-dot online' : 'status-dot offline';
             });
 
-            if (showNotif && lastStatus !== null) {
+            if (showNotif) {
                 showNotification(isOnline ? '🟢' : '🔴', isOnline ? 'Сервер онлайн' : 'Сервер офлайн', isOnline ? 'Сервер успешно подключен!' : 'Сервера выключены', isOnline ? 'success' : 'error', 3000);
             }
         }
 
         async function loadStatus() {
             loadingOverlay.classList.remove('hidden');
-            const status = await checkServerStatus();
-            lastStatus = status;
-            updateUI(status, true);
-            loadingOverlay.classList.add('hidden');
-            startOnlineUpdates();
+            try {
+                const status = await checkServerStatus();
+                updateUI(status, true);
+            } catch (e) {
+                updateUI(false, true);
+            } finally {
+                loadingOverlay.classList.add('hidden');
+            }
         }
 
-        let onlineInterval = null;
-
-        function startOnlineUpdates() {
-            if (onlineInterval) clearInterval(onlineInterval);
-            onlineInterval = setInterval(() => {
-                if (isOnline) {
-                    updateOnlineCounts(true);
-                }
-            }, 3000 + Math.random() * 2000);
-        }
-
-        async function autoRefreshStatus() {
-            const status = await checkServerStatus();
-            updateUI(status, true);
-        }
-
+        // ============================================
+        // ОБНОВЛЕНИЕ СТАТУСА ПО КНОПКЕ
+        // ============================================
         checkUpdatesBtn.addEventListener('click', function() {
             const btn = this;
             btn.disabled = true;
             btn.textContent = '⏳ Проверка...';
-            showNotification('🔄', 'Обновление', 'Проверка обновлений...', 'info', 2500);
-            setTimeout(() => {
-                showNotification('✅', 'Обновление', 'Новых обновлений не найдено!', 'success', 3000);
+            showNotification('🔄', 'Обновление', 'Проверка статуса сервера...', 'info', 2500);
+
+            checkServerStatus().then(status => {
+                updateUI(status, true);
                 btn.disabled = false;
                 btn.innerHTML = '🔄 Проверить обновления';
-            }, 2800);
+                showNotification('✅', 'Готово', 'Статус обновлён', 'success', 2000);
+            }).catch(() => {
+                updateUI(false, true);
+                btn.disabled = false;
+                btn.innerHTML = '🔄 Проверить обновления';
+            });
         });
 
+        // ============================================
+        // ОБНОВЛЕНИЕ UI ПРИ ВЫБОРЕ ВЕРСИИ
+        // ============================================
         function updateInfoDisplay(element, newText, isBadge = false) {
             element.classList.remove('show');
             element.classList.add('fade');
@@ -1188,7 +1182,6 @@
                 selectedRating = newRating;
                 currentDownload = hasDownload;
 
-                // Обновляем размер
                 versionSizeDisplay.textContent = size;
 
                 updateInfoDisplay(selectedVersionDisplay, selectedVersion, false);
@@ -1216,7 +1209,7 @@
         });
 
         // ============================================
-        // ВЫХОД — ОЧИЩАЕМ localStorage И ПЕРЕНАПРАВЛЯЕМ
+        // ВЫХОД
         // ============================================
         exitBtn.addEventListener('click', function() {
             showNotification('🚪', 'Выход', 'Перенаправление...', 'info', 2000);
@@ -1239,7 +1232,6 @@
                 showNotification('❌', 'Ошибка', 'Сервер офлайн! Невозможно запустить клиент.', 'error', 3000);
                 return;
             }
-
             let emoji = '🚀', msg = 'Запуск ' + selectedVersion + '...';
             if (selectedType === 'alpha') emoji = '⚔️';
             else if (selectedType === 'stable') emoji = '🚀';
@@ -1339,8 +1331,10 @@
             }
         })();
 
+        // ── Загрузка статуса при старте (один раз) ──
         loadStatus();
-        setInterval(autoRefreshStatus, 10000);
+
+        // ── Автоматическое обновление статуса отключено (только по кнопке) ──
     </script>
 
 </body>
