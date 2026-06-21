@@ -396,7 +396,7 @@
             transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
             pointer-events: auto;
             position: relative;
-            overflow: hidden;
+            overflow: hidden; /* ← важно для скругления прогресс-бара */
         }
         .notification.show {
             transform: translateX(0);
@@ -437,7 +437,7 @@
             background: linear-gradient(90deg, #7C3AED, #EC4899);
             border-radius: 0 0 1rem 1rem;
             animation: progress 4s linear forwards;
-            width: 100%;
+            width: 100%; /* чтобы не вылазил за скругления */
         }
         .notification.error .progress-bar {
             background: linear-gradient(90deg, #ef4444, #dc2626);
@@ -684,7 +684,6 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-3">
-                    <span class="text-white/70 text-sm font-medium" id="userDisplay">Пользователь</span>
                     <button class="btn-secondary" id="checkUpdatesBtn">
                         🔄 Проверить обновления
                     </button>
@@ -769,10 +768,6 @@
                         <h2 class="text-xl font-bold mb-4 glow-text">📊 Информация</h2>
 
                         <div class="space-y-3">
-                            <div class="info-row">
-                                <span class="text-white/40 text-sm">Пользователь</span>
-                                <span class="font-semibold text-purple-300 info-value show" id="userInfoDisplay">—</span>
-                            </div>
                             <div class="info-row">
                                 <span class="text-white/40 text-sm">Выбрано</span>
                                 <span class="font-semibold text-purple-300 info-value show" id="selectedVersionDisplay">1.21.11</span>
@@ -876,18 +871,6 @@
         }
 
         // ============================================
-        // ПРОВЕРКА АВТОРИЗАЦИИ
-        // ============================================
-
-        const user = localStorage.getItem('launcher_user');
-        if (!user) {
-            window.location.href = 'data.html';
-        }
-
-        document.getElementById('userDisplay').textContent = '👤 ' + user;
-        document.getElementById('userInfoDisplay').textContent = user;
-
-        // ============================================
         // ДИНАМИЧЕСКИЙ ОНЛАЙН
         // ============================================
 
@@ -910,6 +893,10 @@
         let isOnline = true;
         let lastStatus = null;
         let firstLoad = true;
+
+        function getRandomInRange(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
 
         function updateOnlineCounts(showEffect = true) {
             if (!isOnline) {
@@ -959,10 +946,6 @@
                     selectedUsersDisplay.textContent = versionUsers[index];
                 }
             }
-        }
-
-        function getRandomInRange(min, max) {
-            return Math.floor(Math.random() * (max - min + 1)) + min;
         }
 
         // ============================================
@@ -1064,7 +1047,7 @@
         }
 
         // ============================================
-        // ФУНКЦИИ СТАТУСА СЕРВЕРА (исправлено)
+        // ФУНКЦИИ СТАТУСА СЕРВЕРА
         // ============================================
 
         async function checkServerStatus() {
@@ -1079,8 +1062,10 @@
         }
 
         function updateUI(status, showNotif = false) {
+            if (status === lastStatus && !firstLoad) return;
             isOnline = status;
             lastStatus = status;
+            firstLoad = false;
 
             if (isOnline) {
                 statusDot.className = 'status-dot online';
@@ -1104,51 +1089,52 @@
                 updateOnlineCounts(false);
             }
 
-            versionStatuses.forEach((dot) => {
+            versionStatuses.forEach((dot, index) => {
                 dot.className = isOnline ? 'status-dot online' : 'status-dot offline';
             });
 
-            if (showNotif) {
+            if (showNotif && lastStatus !== null) {
                 showNotification(isOnline ? '🟢' : '🔴', isOnline ? 'Сервер онлайн' : 'Сервер офлайн', isOnline ? 'Сервер успешно подключен!' : 'Сервера выключены', isOnline ? 'success' : 'error', 3000);
             }
         }
 
         async function loadStatus() {
             loadingOverlay.classList.remove('hidden');
-            try {
-                const status = await checkServerStatus();
-                updateUI(status, true);
-            } catch (e) {
-                updateUI(false, true);
-            } finally {
-                loadingOverlay.classList.add('hidden');
-            }
+            const status = await checkServerStatus();
+            lastStatus = status;
+            updateUI(status, true);
+            loadingOverlay.classList.add('hidden');
+            startOnlineUpdates();
         }
 
-        // ============================================
-        // ОБНОВЛЕНИЕ СТАТУСА ПО КНОПКЕ
-        // ============================================
+        let onlineInterval = null;
+
+        function startOnlineUpdates() {
+            if (onlineInterval) clearInterval(onlineInterval);
+            onlineInterval = setInterval(() => {
+                if (isOnline) {
+                    updateOnlineCounts(true);
+                }
+            }, 3000 + Math.random() * 2000);
+        }
+
+        async function autoRefreshStatus() {
+            const status = await checkServerStatus();
+            updateUI(status, true);
+        }
+
         checkUpdatesBtn.addEventListener('click', function() {
             const btn = this;
             btn.disabled = true;
             btn.textContent = '⏳ Проверка...';
-            showNotification('🔄', 'Обновление', 'Проверка статуса сервера...', 'info', 2500);
-
-            checkServerStatus().then(status => {
-                updateUI(status, true);
+            showNotification('🔄', 'Обновление', 'Проверка обновлений...', 'info', 2500);
+            setTimeout(() => {
+                showNotification('✅', 'Обновление', 'Новых обновлений не найдено!', 'success', 3000);
                 btn.disabled = false;
                 btn.innerHTML = '🔄 Проверить обновления';
-                showNotification('✅', 'Готово', 'Статус обновлён', 'success', 2000);
-            }).catch(() => {
-                updateUI(false, true);
-                btn.disabled = false;
-                btn.innerHTML = '🔄 Проверить обновления';
-            });
+            }, 2800);
         });
 
-        // ============================================
-        // ОБНОВЛЕНИЕ UI ПРИ ВЫБОРЕ ВЕРСИИ
-        // ============================================
         function updateInfoDisplay(element, newText, isBadge = false) {
             element.classList.remove('show');
             element.classList.add('fade');
@@ -1182,6 +1168,7 @@
                 selectedRating = newRating;
                 currentDownload = hasDownload;
 
+                // Обновляем размер
                 versionSizeDisplay.textContent = size;
 
                 updateInfoDisplay(selectedVersionDisplay, selectedVersion, false);
@@ -1208,12 +1195,8 @@
             });
         });
 
-        // ============================================
-        // ВЫХОД
-        // ============================================
         exitBtn.addEventListener('click', function() {
             showNotification('🚪', 'Выход', 'Перенаправление...', 'info', 2000);
-            localStorage.removeItem('launcher_user');
             setTimeout(() => {
                 window.location.href = 'data.html';
             }, 1500);
@@ -1232,6 +1215,7 @@
                 showNotification('❌', 'Ошибка', 'Сервер офлайн! Невозможно запустить клиент.', 'error', 3000);
                 return;
             }
+
             let emoji = '🚀', msg = 'Запуск ' + selectedVersion + '...';
             if (selectedType === 'alpha') emoji = '⚔️';
             else if (selectedType === 'stable') emoji = '🚀';
@@ -1331,10 +1315,8 @@
             }
         })();
 
-        // ── Загрузка статуса при старте (один раз) ──
         loadStatus();
-
-        // ── Автоматическое обновление статуса отключено (только по кнопке) ──
+        setInterval(autoRefreshStatus, 10000);
     </script>
 
 </body>
