@@ -396,6 +396,7 @@
             transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
             pointer-events: auto;
             position: relative;
+            overflow: hidden; /* ← важно для скругления прогресс-бара */
         }
         .notification.show {
             transform: translateX(0);
@@ -436,6 +437,13 @@
             background: linear-gradient(90deg, #7C3AED, #EC4899);
             border-radius: 0 0 1rem 1rem;
             animation: progress 4s linear forwards;
+            width: 100%; /* чтобы не вылазил за скругления */
+        }
+        .notification.error .progress-bar {
+            background: linear-gradient(90deg, #ef4444, #dc2626);
+        }
+        .notification.success .progress-bar {
+            background: linear-gradient(90deg, #22c55e, #16a34a);
         }
         @keyframes progress {
             0% {
@@ -689,7 +697,7 @@
                         <h2 class="text-xl font-bold mb-4 glow-text">📦 Выберите версию</h2>
 
                         <div class="version-list" id="versionList">
-                            <div class="version-card selected" data-version="1.21.11" data-type="stable" data-rating="4.9" data-download="true">
+                            <div class="version-card selected" data-version="1.21.11" data-type="stable" data-rating="4.9" data-download="true" data-size="60">
                                 <div class="flex items-center gap-3 version-info-group">
                                     <span>🚀</span>
                                     <div>
@@ -704,7 +712,7 @@
                                 </div>
                             </div>
 
-                            <div class="version-card" data-version="1.16.5 Alpha" data-type="alpha" data-rating="4.7" data-download="true">
+                            <div class="version-card" data-version="1.16.5 Alpha" data-type="alpha" data-rating="4.7" data-download="true" data-size="485">
                                 <div class="flex items-center gap-3 version-info-group">
                                     <span>⚔️</span>
                                     <div>
@@ -719,7 +727,7 @@
                                 </div>
                             </div>
 
-                            <div class="version-card" data-version="1.16.5 Free" data-type="free" data-rating="4.5" data-download="false">
+                            <div class="version-card" data-version="1.16.5 Free" data-type="free" data-rating="4.5" data-download="false" data-size="383">
                                 <div class="flex items-center gap-3 version-info-group">
                                     <span>🎯</span>
                                     <div>
@@ -746,7 +754,7 @@
                         </div>
 
                         <div class="mt-3 flex flex-wrap gap-3 text-xs text-white/30">
-                            <span>📁 Размер: ~150MB</span>
+                            <span>📁 Размер: <span id="versionSizeDisplay">60</span>MB</span>
                             <span class="text-white/10">•</span>
                             <span>🔄 Последнее обновление: сегодня</span>
                             <span class="text-white/10">•</span>
@@ -798,7 +806,7 @@
 
             <div class="mt-6 flex flex-wrap justify-between items-center gap-3 text-white/20 text-xs border-t border-white/5 pt-4">
                 <span>VoidWare Launcher v2.0 · © 2026</span>
-                <span>⚡ Made with ❤️ for Minecraft</span>
+                <span>TimofeenTuz Guard</span>
             </div>
 
         </div>
@@ -959,6 +967,7 @@
         const infoStatusDot = document.getElementById('infoStatusDot');
         const infoStatusText = document.getElementById('infoStatusText');
         const loadingOverlay = document.getElementById('loadingOverlay');
+        const versionSizeDisplay = document.getElementById('versionSizeDisplay');
 
         let selectedVersion = '1.21.11';
         let selectedType = 'stable';
@@ -1150,11 +1159,15 @@
                 const newType = this.dataset.type;
                 const newRating = this.dataset.rating || '0';
                 const hasDownload = this.dataset.download === 'true';
+                const size = this.dataset.size || '?';
 
                 selectedVersion = newVersion;
                 selectedType = newType;
                 selectedRating = newRating;
                 currentDownload = hasDownload;
+
+                // Обновляем размер
+                versionSizeDisplay.textContent = size;
 
                 updateInfoDisplay(selectedVersionDisplay, selectedVersion, false);
                 const typeLabels = { 'alpha': 'Alpha', 'stable': 'Стабильная', 'free': 'Free' };
