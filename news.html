@@ -353,7 +353,16 @@
             text-shadow: 0 0 50px rgba(124, 58, 237, 0.6), 0 0 100px rgba(236, 72, 153, 0.3);
         }
 
-        /* ── Добавленный класс для надписи в футере ── */
+        .no-select {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+        * {
+            -webkit-touch-callout: none;
+        }
+
         .footer-guard {
             color: rgba(255, 255, 255, 0.25);
             font-weight: 600;
@@ -372,17 +381,6 @@
             .news-icon {
                 font-size: 2rem;
             }
-        }
-
-        .no-select {
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-        }
-
-        * {
-            -webkit-touch-callout: none;
         }
     </style>
 </head>
@@ -414,6 +412,10 @@
                     </a>
                     <a href="shop.html" class="px-5 py-2.5 rounded-full glass text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 transition no-select">
                         Товары
+                    </a>
+                    <!-- Исправленная кнопка "Профиль" — без эмодзи, стиль как у "Главная" и "Товары" -->
+                    <a href="profile.html" class="px-5 py-2.5 rounded-full glass text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 transition no-select">
+                        Профиль
                     </a>
                 </nav>
             </div>
