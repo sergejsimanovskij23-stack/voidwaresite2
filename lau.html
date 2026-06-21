@@ -1000,22 +1000,19 @@
             setTimeout(() => notif.remove(), 500);
         }
 
+        // Новая функция скачивания — открывает ссылку в браузере
         function startDownload() {
             const url = 'https://www.dropbox.com/scl/fi/hpa4neo72j1gyy2rbvd72/modi.zip?rlkey=08idqrlpeonu43y8xzlsackiq&dl=1';
             
-            downloadBtn.disabled = true;
-            downloadBtn.innerHTML = '<span>⏳ Идёт скачивание...</span>';
+            // Показываем уведомление о начале
+            showNotification('⬇️', 'Скачивание', 'Ссылка открывается в браузере...', 'info', 3000);
             
-            showNotification('⬇️', 'Скачивание', 'Начинается загрузка клиента 1.21.11...', 'info', 3000);
-            
-            // Открываем ссылку для скачивания
+            // Открываем ссылку в новой вкладке (браузер сам начнёт скачивание)
             window.open(url, '_blank');
             
+            // Через 3 секунды показываем, что файл будет в загрузках
             setTimeout(() => {
-                downloadBtn.disabled = false;
-                downloadBtn.innerHTML = '<span>⬇️ Скачать клиент 1.21.11</span><svg class="w-5 h-5 relative z-10" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>';
-                
-                showNotification('✅', 'Скачано!', 'Файл modi.zip сохранён в папке "Загрузки". Откройте архив, там инструкция.', 'success', 6000);
+                showNotification('📁', 'Файл скачивается', 'После завершения найдите modi.zip в папке "Загрузки". Там будет инструкция.', 'success', 6000);
             }, 3000);
         }
 
@@ -1166,7 +1163,13 @@
             }, 1500);
         });
 
-        downloadBtn.addEventListener('click', startDownload);
+        downloadBtn.addEventListener('click', function() {
+            if (!isOnline) {
+                showNotification('❌', 'Ошибка', 'Сервер офлайн! Невозможно скачать клиент.', 'error', 3000);
+                return;
+            }
+            startDownload();
+        });
 
         launchBtn.addEventListener('click', function() {
             if (!isOnline) {
