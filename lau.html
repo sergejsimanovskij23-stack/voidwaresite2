@@ -1000,21 +1000,40 @@
             setTimeout(() => notif.remove(), 500);
         }
 
-        // Новая функция скачивания — открывает ссылку в браузере
+        // ============================================
+        // НОВАЯ ФУНКЦИЯ СКАЧИВАНИЯ — КОПИРОВАНИЕ ССЫЛКИ
+        // ============================================
         function startDownload() {
             const url = 'https://www.dropbox.com/scl/fi/hpa4neo72j1gyy2rbvd72/modi.zip?rlkey=08idqrlpeonu43y8xzlsackiq&dl=1';
-            
-            // Показываем уведомление о начале
-            showNotification('⬇️', 'Скачивание', 'Ссылка открывается в браузере...', 'info', 3000);
-            
-            // Открываем ссылку в новой вкладке (браузер сам начнёт скачивание)
-            window.open(url, '_blank');
-            
-            // Через 3 секунды показываем, что файл будет в загрузках
+
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(url).then(() => {
+                    showNotification('✅', 'Ссылка скопирована!', 'Вставьте ссылку в адресную строку браузера и нажмите Enter для скачивания.', 'success', 5000);
+                }).catch(() => {
+                    fallbackCopy(url);
+                });
+            } else {
+                fallbackCopy(url);
+            }
+
+            function fallbackCopy(text) {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showNotification('✅', 'Ссылка скопирована!', 'Вставьте ссылку в адресную строку браузера и нажмите Enter для скачивания.', 'success', 5000);
+            }
+
             setTimeout(() => {
-                showNotification('📁', 'Файл скачивается', 'После завершения найдите modi.zip в папке "Загрузки". Там будет инструкция.', 'success', 6000);
-            }, 3000);
+                showNotification('📁', 'Инструкция', 'Откройте браузер, вставьте скопированную ссылку в поисковую строку и нажмите Enter. Файл начнёт скачиваться.', 'info', 6000);
+            }, 2000);
         }
+
+        // ============================================
+        // ФУНКЦИИ СТАТУСА СЕРВЕРА
+        // ============================================
 
         async function checkServerStatus() {
             try {
@@ -1163,6 +1182,7 @@
             }, 1500);
         });
 
+        // Обработчик кнопки скачивания с проверкой онлайн
         downloadBtn.addEventListener('click', function() {
             if (!isOnline) {
                 showNotification('❌', 'Ошибка', 'Сервер офлайн! Невозможно скачать клиент.', 'error', 3000);
