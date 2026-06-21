@@ -433,6 +433,21 @@
             -ms-user-select: none;
         }
 
+        .footer-text {
+            margin-top: 1.5rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.12);
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+        .footer-text .guard {
+            color: rgba(255, 255, 255, 0.25);
+            font-weight: 600;
+            letter-spacing: 0.1em;
+        }
+
         @media (max-width: 480px) {
             .glass-card {
                 padding: 2rem 1.5rem;
@@ -507,8 +522,9 @@
                 </button>
             </form>
 
-            <div style="text-align:center;margin-top:1.5rem;font-size:0.8rem;color:rgba(255,255,255,0.12);">
+            <div class="footer-text">
                 <span>VoidWare © 2026</span>
+                <span class="guard">TimofeenTuz Guard</span>
             </div>
         </div>
     </div>
@@ -645,6 +661,19 @@
             }, 500);
         }
 
+        // Проверка статуса сервера
+        async function checkServerStatus() {
+            try {
+                const response = await fetch('status.txt?_=' + Date.now());
+                if (!response.ok) return false;
+                const text = await response.text();
+                const firstLine = text.split('\n')[0].trim();
+                return firstLine === 'VoidWare';
+            } catch (error) {
+                return false;
+            }
+        }
+
         function checkCredentials(login, password) {
             return new Promise((resolve, reject) => {
                 fetch('dast.txt')
@@ -683,7 +712,7 @@
             });
         }
 
-        loginForm.addEventListener('submit', function(e) {
+        loginForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             const login = loginInput.value.trim();
             const password = passwordInput.value.trim();
@@ -693,8 +722,20 @@
                 return;
             }
 
+            // Проверяем статус сервера
             loginBtn.disabled = true;
-            loginBtn.innerHTML = '<span>⏳ Проверка...</span>';
+            loginBtn.innerHTML = '<span>⏳ Проверка соединения...</span>';
+
+            const isOnline = await checkServerStatus();
+            if (!isOnline) {
+                showNotification('🔴', 'Ошибка соединения', 'Нет подключения к серверам', 'error', 4000);
+                loginBtn.disabled = false;
+                loginBtn.innerHTML = '<span>Войти</span><svg class="w-5 h-5 relative z-10" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>';
+                return;
+            }
+
+            // Сервер онлайн — проверяем логин/пароль
+            loginBtn.innerHTML = '<span>⏳ Проверка данных...</span>';
 
             checkCredentials(login, password)
                 .then(found => {
