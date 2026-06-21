@@ -756,7 +756,6 @@
             -webkit-touch-callout: none;
         }
 
-        /* ── Добавленный класс для надписи ── */
         .footer-guard {
             color: rgba(255, 255, 255, 0.25);
             font-weight: 600;
@@ -806,6 +805,10 @@
                     </a>
                     <a href="shop.html" class="px-5 py-2.5 rounded-full glass text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 transition no-select">
                         Товары
+                    </a>
+                    <!-- Исправленная кнопка "Профиль" — без эмодзи, стиль как у "Новости" и "Товары" -->
+                    <a href="profile.html" class="px-5 py-2.5 rounded-full glass text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 transition no-select">
+                        Профиль
                     </a>
                 </nav>
             </div>
@@ -1097,37 +1100,29 @@
 <script>
     // ── ЗАЩИТА ОТ КОПИРОВАНИЯ ──
 
-    // 1. Блокировка правой кнопки мыши (контекстное меню)
     document.addEventListener('contextmenu', function(e) {
         e.preventDefault();
         return false;
     });
 
-    // 2. Блокировка F12 и других клавиш разработчика
     document.addEventListener('keydown', function(e) {
-        // F12
         if (e.key === 'F12' || e.keyCode === 123) {
             e.preventDefault();
             return false;
         }
-        // Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
         if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.keyCode === 73 || e.keyCode === 74)) {
             e.preventDefault();
             return false;
         }
-        // Ctrl+U (просмотр исходного кода)
         if (e.ctrlKey && (e.key === 'u' || e.key === 'U' || e.keyCode === 85)) {
             e.preventDefault();
             return false;
         }
-        // Ctrl+S (сохранение страницы)
         if (e.ctrlKey && (e.key === 's' || e.key === 'S' || e.keyCode === 83)) {
             e.preventDefault();
             return false;
         }
-        // Ctrl+C (копирование) - только на элементах, где не нужно
         if (e.ctrlKey && (e.key === 'c' || e.key === 'C' || e.keyCode === 67)) {
-            // Разрешаем копирование только в полях ввода
             const tag = document.activeElement.tagName;
             if (tag !== 'INPUT' && tag !== 'TEXTAREA') {
                 e.preventDefault();
@@ -1136,7 +1131,6 @@
         }
     });
 
-    // 3. Блокировка выделения текста (уже в CSS, но дублируем)
     document.addEventListener('selectstart', function(e) {
         const tag = e.target.tagName;
         if (tag !== 'INPUT' && tag !== 'TEXTAREA') {
@@ -1145,13 +1139,11 @@
         }
     });
 
-    // 4. Блокировка перетаскивания изображений
     document.addEventListener('dragstart', function(e) {
         e.preventDefault();
         return false;
     });
 
-    // 5. Блокировка копирования через меню браузера
     document.addEventListener('copy', function(e) {
         const tag = document.activeElement.tagName;
         if (tag !== 'INPUT' && tag !== 'TEXTAREA') {
@@ -1160,19 +1152,15 @@
         }
     });
 
-    // 6. Отключение DevTools через обнаружение (дополнительная защита)
-    // Проверка изменения размера окна (признак открытого DevTools)
     let devtoolsDetect = false;
     const element = new Image();
     Object.defineProperty(element, 'id', {
         get: function() {
             devtoolsDetect = true;
-            // Можно добавить редирект или очистку страницы
         }
     });
     console.log('%c', element);
 
-    // 7. Отключение клавиши Print Screen
     document.addEventListener('keyup', function(e) {
         if (e.key === 'PrintScreen' || e.keyCode === 44) {
             e.preventDefault();
