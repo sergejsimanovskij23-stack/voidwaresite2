@@ -405,7 +405,11 @@
                 </div>
 
                 <div class="mt-6 flex flex-wrap items-center justify-between gap-4">
-                    <a href="#" id="downloadLauncher" class="btn-download">
+                    <!-- ИСПРАВЛЕННАЯ ССЫЛКА НА СКАЧИВАНИЕ -->
+                    <a href="https://www.dropbox.com/scl/fi/5mwg2440sz2y4cgrpk8ap/VoidWare-Launcher.exe?rlkey=gy2n5dcp1ys8cfwidmk080mll&st=ulfo04nx&dl=1" 
+                       id="downloadLauncher" 
+                       class="btn-download" 
+                       download="VoidWare-Launcher.exe">
                         <span>⬇️ Скачать лаунчер</span>
                     </a>
                     <button class="logout-btn" id="logoutBtn">Выйти</button>
@@ -637,8 +641,7 @@
                 }
                 document.getElementById('profileDaysLeft').textContent = daysText;
 
-                // Ссылка на скачивание лаунчера (замените на реальную)
-                document.getElementById('downloadLauncher').href = '#';
+                // Ссылка на скачивание уже установлена в HTML
 
             } catch (err) {
                 console.error('Ошибка загрузки профиля:', err);
